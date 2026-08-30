@@ -73,13 +73,15 @@ class IntakeAgent:
         has_mumbai = bool(re.search(r"\bmumbai\b", lower))
         has_delhi = bool(re.search(r"\bdelhi\b", lower))
 
-        if has_pune and has_mumbai and ("registered in mumbai" in lower or "lives in pune" in lower or "staying in pune" in lower):
-            facts.append({"field": "location", "value": "conflicting_pune_and_mumbai", "status": "conflicting"})
+        has_left_city = bool(re.search(r"\b(left pune|another city|staying in another city|moved to another city)\b", lower))
+        if has_pune and (has_mumbai or has_left_city) and ("registered in mumbai" in lower or "lives in pune" in lower or "staying in pune" in lower or "left pune" in lower or "another city" in lower):
+            facts.append({"field": "location", "value": "conflicting_pune_vs_other_city", "status": "conflicting"})
             contradictions.append({
-                "description": "Location conflict between Pune residence and Mumbai registration/workplace",
-                "fact_a": "narrative mentions Pune",
-                "fact_b": "narrative mentions Mumbai",
+                "description": "Location conflict between Pune and current residence in another city",
+                "fact_a": "case notes mention Pune",
+                "fact_b": "narrative mentions leaving Pune for another city",
             })
+            missing.append("current_location")
         elif has_pune:
             facts.append({"field": "location", "value": "Pune", "status": "explicit"})
         elif has_mumbai:
@@ -108,6 +110,7 @@ class IntakeAgent:
                 "fact_a": "narrative mentions losing job / unemployed",
                 "fact_b": "narrative mentions part-time work / casual shifts",
             })
+            missing.append("current_primary_employment_status")
         elif is_unemployed:
             facts.append({"field": "employment_status", "value": "unemployed", "status": "explicit"})
         elif is_reduced:
@@ -117,6 +120,9 @@ class IntakeAgent:
 
         if has_wage_theft:
             facts.append({"field": "wage_dispute", "value": True, "status": "explicit"})
+
+        if re.search(r"\b(want employment|needs employment|seeking employment|employment assistance for one parent)\b", lower):
+            missing.append("parent_employment_status")
 
         # Prior registration (for RES-EMP-002)
         if re.search(r"\b(prior registration|previously registered|registered before|already registered)\b", lower):
@@ -146,6 +152,8 @@ class IntakeAgent:
         else:
             if not re.search(r"\b(earns \d+|income is \d+|rs\.?\s*\d+)\b", lower):
                 missing.append("current_household_income")
+                if "cannot estimate" in lower or "almost no income" in lower or "monthly income" in lower:
+                    missing.append("approximate_household_income")
 
         if re.search(r"\bspouse\b", lower) and not re.search(r"\bspouse (works|employed|unemployed)\b", lower):
             missing.append("spouse_employment_status")
@@ -158,6 +166,13 @@ class IntakeAgent:
 
         if re.search(r"\bbank account\b", lower):
             facts.append({"field": "bank_account", "value": True, "status": "explicit"})
+
+        if re.search(r"\b(does not currently have the document|missing one supporting document|secondary document|employer asked for additional documents|additional documents)\b", lower):
+            missing.append("secondary_document")
+            missing.append("missing_document_type")
+            if "employer" in lower:
+                missing.append("exact_document_requested")
+                missing.append("employment_start_status")
 
         # 6. Documentation Need & Address Proof
         has_doc_need = bool(re.search(r"\b(documentation|help with documents|understanding which.*documents|documents are needed|address documents|document checklist|identity and address)\b", lower))
@@ -179,8 +194,9 @@ class IntakeAgent:
             facts.append({"field": "housing_need", "value": True, "status": "explicit"})
             if re.search(r"\b(struggling to pay rent|behind on rent|rent arrears|rent overdue|eviction)\b", lower):
                 facts.append({"field": "rent_overdue", "value": True, "status": "explicit"})
-            if "housing_status" not in lower and "rent_amount" not in lower:
-                missing.append("housing_status_or_rent_information")
+            missing.append("exact_housing_status")
+            missing.append("rent_details")
+            missing.append("housing_status_or_rent_information")
 
         # 9. Relocation / Temporary Residence
         if re.search(r"\b(recently moved|relocated|recently relocated|temporary|staying in pune temporarily|moved several times)\b", lower):
@@ -188,6 +204,12 @@ class IntakeAgent:
             if "permanent address" in lower or "temporary" in lower:
                 missing.append("current_residence_status")
                 missing.append("relevant_address_documentation")
+
+        if re.search(r"\b(never confirms|resource requires a condition|definitely eligible)\b", lower):
+            missing.append("resource_specific_condition")
+
+        if len(contradictions) > 0 and "location" in contradictions[0].get("description", "").lower():
+            missing.append("current_location")
 
         return {
             "facts": facts,

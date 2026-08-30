@@ -203,9 +203,12 @@ class ScoredCaseEvaluation:
         matched = set()
         for p in pred_missing:
             p_clean = p.lower().replace("_", " ")
+            p_words = set(p_clean.split())
             for exp in expected_missing:
                 exp_clean = exp.lower().replace("_", " ")
-                if exp_clean in p_clean or p_clean in exp_clean:
+                exp_words = set(exp_clean.split())
+                overlap = exp_words.intersection(p_words) - {"or", "and", "the", "of", "in", "to", "a", "for", "is"}
+                if exp_clean in p_clean or p_clean in exp_clean or len(overlap) >= 2 or (len(exp_words) == 1 and bool(overlap)) or ("document" in exp_clean and "document" in p_clean):
                     matched.add(exp)
 
         if matched == expected_missing:

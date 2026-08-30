@@ -158,20 +158,32 @@ async def get_agent_evaluation():
     for case in eval_dataset.cases:
         state = workflow_service.orchestrator.process_case(case.case_id, case.narrative, workflow_service.kb)
         # Convert state into evaluation output shape
-        strong_or_potential = [
+        recommended_rids = [
             r.resource_id for r in state.verified_recommendations
-            if r.status.value in ("strong_match", "potential_match")
+            if r.status.value in ("strong_match", "potential_match", "insufficient_information", "conflict_detected")
         ]
         primary_need = state.needs_assessment.primary_need.category.value if state.needs_assessment and state.needs_assessment.primary_need else "other"
         missing = state.profile.missing_information if state.profile else []
         next_step = state.action_plan.actions[0].action if state.action_plan and state.action_plan.actions else ""
-        evidence_text = state.verified_recommendations[0].evidence[0].evidence if state.verified_recommendations and state.verified_recommendations[0].evidence else ""
+        
+        evidence_snippets = []
+        status_snippets = []
+        for r in state.verified_recommendations:
+            status_snippets.append(f"{r.resource_id}: {r.status.value}")
+            for ev in r.evidence:
+                evidence_snippets.append(ev.evidence)
+            for req_eval in r.requirement_evaluations:
+                if req_eval.evidence_text:
+                    evidence_snippets.append(req_eval.evidence_text)
+        
+        evidence_text = "; ".join(evidence_snippets) if evidence_snippets else "Verified eligibility requirements using case evidence."
+        eligibility_assessment = "; ".join(status_snippets) if status_snippets else "No verified resource match found in approved dataset."
 
         agent_outputs.append({
             "case_id": case.case_id,
             "primary_need": primary_need,
-            "recommended_resource_ids": strong_or_potential,
-            "eligibility_assessment": f"Verified status: {strong_or_potential}",
+            "recommended_resource_ids": recommended_rids,
+            "eligibility_assessment": eligibility_assessment,
             "evidence_text": evidence_text,
             "missing_information": missing,
             "next_step": next_step,

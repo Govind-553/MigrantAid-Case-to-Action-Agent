@@ -13,19 +13,25 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 
 # Add backend directory to sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 BACKEND_DIR = PROJECT_ROOT / "backend"
-sys.path.insert(0, str(BACKEND_DIR))
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
 
-from app.config import logger  # noqa: E402
-from app.services.baseline import BaselineService  # noqa: E402
-from app.services.evaluation_loader import load_evaluation_cases  # noqa: E402
-from app.services.resource_kb import load_resource_kb  # noqa: E402
+try:
+    from app.config import logger  # noqa: E402
+    from app.services.baseline import BaselineService  # noqa: E402
+    from app.services.evaluation_loader import load_evaluation_cases  # noqa: E402
+    from app.services.resource_kb import load_resource_kb  # noqa: E402
+except ImportError:
+    from backend.app.config import logger  # type: ignore
+    from backend.app.services.baseline import BaselineService  # type: ignore
+    from backend.app.services.evaluation_loader import load_evaluation_cases  # type: ignore
+    from backend.app.services.resource_kb import load_resource_kb  # type: ignore
 
 
 def main():

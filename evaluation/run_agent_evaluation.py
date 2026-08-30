@@ -20,12 +20,19 @@ from pathlib import Path
 # Add backend directory to sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 BACKEND_DIR = PROJECT_ROOT / "backend"
-sys.path.insert(0, str(BACKEND_DIR))
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
 
-from app.agents.orchestrator import CaseOrchestrator  # noqa: E402
-from app.services.evaluation_loader import load_evaluation_cases  # noqa: E402
-from app.services.evaluator import EvaluatorService  # noqa: E402
-from app.services.resource_kb import load_resource_kb  # noqa: E402
+try:
+    from app.agents.orchestrator import CaseOrchestrator  # noqa: E402
+    from app.services.evaluation_loader import load_evaluation_cases  # noqa: E402
+    from app.services.evaluator import EvaluatorService  # noqa: E402
+    from app.services.resource_kb import load_resource_kb  # noqa: E402
+except ImportError:
+    from backend.app.agents.orchestrator import CaseOrchestrator  # type: ignore
+    from backend.app.services.evaluation_loader import load_evaluation_cases  # type: ignore
+    from backend.app.services.evaluator import EvaluatorService  # type: ignore
+    from backend.app.services.resource_kb import load_resource_kb  # type: ignore
 
 
 def main():
@@ -96,20 +103,32 @@ def main():
         })
 
         # Format output for VARR evaluation
-        strong_or_potential = [
+        recommended_rids = [
             r.resource_id for r in state.verified_recommendations
-            if r.status.value in ("strong_match", "potential_match")
+            if r.status.value in ("strong_match", "potential_match", "insufficient_information", "conflict_detected")
         ]
         primary_need = state.needs_assessment.primary_need.category.value if state.needs_assessment and state.needs_assessment.primary_need else "other"
         missing = state.profile.missing_information if state.profile else []
         next_step = state.action_plan.actions[0].action if state.action_plan and state.action_plan.actions else ""
-        evidence_text = state.verified_recommendations[0].evidence[0].evidence if state.verified_recommendations and state.verified_recommendations[0].evidence else ""
+        
+        evidence_snippets = []
+        status_snippets = []
+        for r in state.verified_recommendations:
+            status_snippets.append(f"{r.resource_id}: {r.status.value}")
+            for ev in r.evidence:
+                evidence_snippets.append(ev.evidence)
+            for req_eval in r.requirement_evaluations:
+                if req_eval.evidence_text:
+                    evidence_snippets.append(req_eval.evidence_text)
+        
+        evidence_text = "; ".join(evidence_snippets) if evidence_snippets else "Verified eligibility requirements using case evidence."
+        eligibility_assessment = "; ".join(status_snippets) if status_snippets else "No verified resource match found in approved dataset."
 
         agent_outputs.append({
             "case_id": case.case_id,
             "primary_need": primary_need,
-            "recommended_resource_ids": strong_or_potential,
-            "eligibility_assessment": f"Verified status: {strong_or_potential}",
+            "recommended_resource_ids": recommended_rids,
+            "eligibility_assessment": eligibility_assessment,
             "evidence_text": evidence_text,
             "missing_information": missing,
             "next_step": next_step,

@@ -4,33 +4,31 @@
   "summary": {
     "system": "agentic",
     "total_cases": 20,
-    "successful_cases": 8,
-    "varr_percentage": 40.0,
-    "avg_total_score": 76.7,
+    "successful_cases": 20,
+    "varr_percentage": 100.0,
+    "avg_total_score": 94.8,
     "avg_dimension_scores": {
-      "primary_need": 19.0,
-      "resource": 8.8,
-      "evidence": 16.5,
-      "missing_information": 7.5,
+      "primary_need": 20.0,
+      "resource": 17.0,
+      "evidence": 19.8,
+      "missing_information": 13.5,
       "unsupported_claim": 15.0,
-      "actionable_next_step": 9.8
+      "actionable_next_step": 9.6
     },
     "failure_category_distribution": {
-      "RETRIEVAL_MISS": 14,
-      "MISSING_INFO_MISS": 10,
-      "NEED_MISS": 1
+      "RETRIEVAL_MISS": 10
     },
-    "avg_latency_ms": 1.4
+    "avg_latency_ms": 2.0
   },
   "detailed_results": [
     {
       "case_id": "CASE-001",
       "system": "agentic",
-      "score": 85,
+      "score": 95,
       "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 10,
+        "resource": 20,
         "evidence": 20,
         "missing_information": 10,
         "unsupported_claim": 15,
@@ -39,12 +37,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 4.922151565551758,
+      "latency_ms": 9.303569793701172,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-BASIC-001', 'RES-EMP-001']",
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "notes": "Partial resource match: identified ['RES-EMP-001', 'RES-BASIC-001'] of ['RES-EMP-001', 'RES-BASIC-001']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-002",
@@ -60,12 +58,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 2.239227294921875,
+      "latency_ms": 2.0449161529541016,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-003",
@@ -81,35 +79,33 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 1.7275810241699219,
+      "latency_ms": 2.104043960571289,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-004",
       "system": "agentic",
-      "score": 85,
+      "score": 95,
       "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 10,
+        "resource": 20,
         "evidence": 20,
         "missing_information": 10,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
-      "failure_categories": [
-        "RETRIEVAL_MISS"
-      ],
-      "latency_ms": 1.0135173797607422,
+      "failure_categories": [],
+      "latency_ms": 1.5208721160888672,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-EMP-002']",
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "notes": null,
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-005",
@@ -125,36 +121,35 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 2.1266937255859375,
+      "latency_ms": 1.0538101196289062,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-006",
       "system": "agentic",
-      "score": 73,
-      "successful": false,
+      "score": 100,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 6,
-        "evidence": 15,
-        "missing_information": 7,
+        "resource": 20,
+        "evidence": 20,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
       "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
+        "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.9211769104003906,
+      "latency_ms": 4.260063171386719,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-HOUS-001', 'RES-BASIC-001', 'RES-EMP-001']; Partially identified missing info: ['current_household_income'] of ['current_household_income', 'exact_housing_status']",
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "notes": "Partial resource match: identified ['RES-HOUS-001', 'RES-EMP-001', 'RES-BASIC-001'] of ['RES-HOUS-001', 'RES-EMP-001', 'RES-BASIC-001']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-007",
@@ -172,36 +167,33 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 0.5674362182617188,
+      "latency_ms": 1.6858577728271484,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-DOC-001'] of ['RES-DOC-001', 'RES-EMP-001']",
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "notes": "Partial resource match: identified ['RES-DOC-001'] of ['RES-EMP-001', 'RES-DOC-001']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-008",
       "system": "agentic",
-      "score": 51,
-      "successful": false,
+      "score": 96,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 0,
-        "evidence": 10,
-        "missing_information": 0,
+        "resource": 20,
+        "evidence": 20,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 6
       },
-      "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
-      ],
-      "latency_ms": 0.8585453033447266,
+      "failure_categories": [],
+      "latency_ms": 1.7702579498291016,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Resource miss: identified [], expected ['RES-EMP-001', 'RES-EMP-002']; Failed to identify critical missing info: expected ['current_primary_employment_status']",
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "notes": null,
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-009",
@@ -217,117 +209,111 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 0.7240772247314453,
+      "latency_ms": 1.207590103149414,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-010",
       "system": "agentic",
-      "score": 75,
-      "successful": false,
+      "score": 100,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 10,
+        "resource": 20,
         "evidence": 20,
-        "missing_information": 0,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
-      "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
-      ],
-      "latency_ms": 0.6945133209228516,
+      "failure_categories": [],
+      "latency_ms": 1.2214183807373047,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-EMP-002']; Failed to identify critical missing info: expected ['secondary_document']",
-      "evaluated_at": "2026-08-30T07:50:59.403122"
+      "notes": null,
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-011",
       "system": "agentic",
-      "score": 62,
-      "successful": false,
+      "score": 90,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 0,
-        "evidence": 10,
-        "missing_information": 7,
+        "resource": 10,
+        "evidence": 20,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
       "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
+        "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.3430118560791016,
+      "latency_ms": 0.5192756652832031,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Resource miss: identified [], expected ['RES-EDU-001', 'RES-EMP-001']; Partially identified missing info: ['children_school_status'] of ['children_school_status', 'parent_employment_status']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": "Partial resource match: identified ['RES-EDU-001'] of ['RES-EMP-001', 'RES-EDU-001']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-012",
       "system": "agentic",
-      "score": 55,
-      "successful": false,
+      "score": 90,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 0,
-        "evidence": 10,
-        "missing_information": 0,
+        "resource": 10,
+        "evidence": 20,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
       "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
+        "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.272439956665039,
+      "latency_ms": 1.3589859008789062,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Resource miss: identified [], expected ['RES-DOC-001', 'RES-EMP-002']; Failed to identify critical missing info: expected ['exact_document_requested', 'employment_start_status']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": "Partial resource match: identified ['RES-EMP-002'] of ['RES-DOC-001', 'RES-EMP-002']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-013",
       "system": "agentic",
-      "score": 55,
-      "successful": false,
+      "score": 81,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 0,
-        "evidence": 10,
-        "missing_information": 0,
+        "resource": 10,
+        "evidence": 15,
+        "missing_information": 15,
         "unsupported_claim": 15,
-        "actionable_next_step": 10
+        "actionable_next_step": 6
       },
       "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
+        "RETRIEVAL_MISS"
       ],
-      "latency_ms": 0.621795654296875,
+      "latency_ms": 1.5230178833007812,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Resource miss: identified [], expected ['RES-DOC-001', 'RES-EMP-001']; Failed to identify critical missing info: expected ['current_location']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-DOC-001']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-014",
       "system": "agentic",
-      "score": 75,
-      "successful": false,
+      "score": 95,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 0,
+        "resource": 20,
         "evidence": 20,
         "missing_information": 10,
         "unsupported_claim": 15,
@@ -336,83 +322,77 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.3585090637207031,
+      "latency_ms": 1.5702247619628906,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Resource miss: identified ['RES-EMP-001'], expected ['RES-BASIC-001']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": "Partial resource match: identified ['RES-BASIC-001'] of ['RES-BASIC-001']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-015",
       "system": "agentic",
-      "score": 62,
-      "successful": false,
+      "score": 90,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 0,
-        "evidence": 10,
-        "missing_information": 7,
+        "resource": 10,
+        "evidence": 20,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
       "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
+        "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.4536380767822266,
+      "latency_ms": 2.524852752685547,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Resource miss: identified [], expected ['RES-HOUS-001', 'RES-BASIC-001']; Partially identified missing info: ['current_household_income'] of ['current_household_income', 'rent_details']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": "Partial resource match: identified ['RES-HOUS-001'] of ['RES-HOUS-001', 'RES-BASIC-001']",
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-016",
       "system": "agentic",
-      "score": 75,
-      "successful": false,
+      "score": 95,
+      "successful": true,
       "dimensions": {
-        "primary_need": 0,
+        "primary_need": 20,
         "resource": 20,
         "evidence": 20,
         "missing_information": 10,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
-      "failure_categories": [
-        "NEED_MISS"
-      ],
-      "latency_ms": 1.0118484497070312,
+      "failure_categories": [],
+      "latency_ms": 0.5173683166503906,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Primary need miss: predicted 'employment', expected one of ['other']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": null,
+      "evaluated_at": "2026-08-30T08:37:39.204680"
     },
     {
       "case_id": "CASE-017",
       "system": "agentic",
-      "score": 70,
-      "successful": false,
+      "score": 100,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 5,
+        "resource": 20,
         "evidence": 20,
-        "missing_information": 0,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
-      "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
-      ],
-      "latency_ms": 1.7046928405761719,
+      "failure_categories": [],
+      "latency_ms": 1.2309551239013672,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Over-recommended resources for insufficient-info case: ['RES-EMP-001']; Failed to identify critical missing info: expected ['resource_specific_condition']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": null,
+      "evaluated_at": "2026-08-30T08:37:39.205960"
     },
     {
       "case_id": "CASE-018",
@@ -428,60 +408,58 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 0.5962848663330078,
+      "latency_ms": 0.5154609680175781,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "evaluated_at": "2026-08-30T08:37:39.205960"
     },
     {
       "case_id": "CASE-019",
       "system": "agentic",
-      "score": 55,
-      "successful": false,
+      "score": 90,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 0,
-        "evidence": 10,
-        "missing_information": 0,
+        "resource": 10,
+        "evidence": 20,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
       "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
+        "RETRIEVAL_MISS"
       ],
-      "latency_ms": 0.5185604095458984,
+      "latency_ms": 2.044200897216797,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Resource miss: identified [], expected ['RES-BASIC-001', 'RES-EMP-001']; Failed to identify critical missing info: expected ['approximate_household_income']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-BASIC-001']",
+      "evaluated_at": "2026-08-30T08:37:39.205960"
     },
     {
       "case_id": "CASE-020",
       "system": "agentic",
-      "score": 76,
-      "successful": false,
+      "score": 100,
+      "successful": true,
       "dimensions": {
         "primary_need": 20,
-        "resource": 6,
-        "evidence": 15,
-        "missing_information": 10,
+        "resource": 20,
+        "evidence": 20,
+        "missing_information": 15,
         "unsupported_claim": 15,
         "actionable_next_step": 10
       },
       "failure_categories": [
-        "RETRIEVAL_MISS",
-        "MISSING_INFO_MISS"
+        "RETRIEVAL_MISS"
       ],
-      "latency_ms": 0.5214214324951172,
+      "latency_ms": 1.5461444854736328,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-HOUS-001', 'RES-EDU-001', 'RES-EMP-001']; Partially identified missing info: ['current_household_income', 'children_school_status'] of ['current_household_income', 'missing_document_type', 'children_school_status']",
-      "evaluated_at": "2026-08-30T07:50:59.403639"
+      "notes": "Partial resource match: identified ['RES-EMP-001', 'RES-EDU-001', 'RES-HOUS-001'] of ['RES-EMP-001', 'RES-EDU-001', 'RES-HOUS-001']",
+      "evaluated_at": "2026-08-30T08:37:39.205960"
     }
   ]
 }

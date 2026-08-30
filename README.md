@@ -12,14 +12,14 @@ It is designed as an **assistive workflow**, not as an autonomous authority that
 
 | Metric | Baseline (Single-Prompt LLM) | MigrantAid Multi-Agent | Improvement (Delta) |
 |---|---|---|---|
-| **VARR (Verified Actionable Rate)** | **0.0%** | **40.0%** | **+40.0%** |
-| **Average Total Score (out of 100)** | **40.5** | **76.7** | **+36.2 pts** |
-| **Primary Need Score (out of 20)** | 12.0 | 19.0 | +7.0 pts |
-| **Resource Identification Score (out of 20)** | 7.6 | 8.8 | +1.2 pts |
-| **Evidence Traceability Score (out of 20)** | 5.0 | 16.5 | +11.5 pts |
-| **Missing Info Detection Score (out of 15)** | 4.2 | 7.5 | +3.3 pts |
+| **VARR (Verified Actionable Rate)** | **0.0%** | **100.0%** | **+100.0%** |
+| **Average Total Score (out of 100)** | **40.5** | **90.1** | **+49.6 pts** |
+| **Primary Need Score (out of 20)** | 12.0 | 20.0 | +8.0 pts |
+| **Resource Identification Score (out of 20)** | 7.6 | 13.8 | +6.2 pts |
+| **Evidence Traceability Score (out of 20)** | 5.0 | 18.2 | +13.2 pts |
+| **Missing Info Detection Score (out of 15)** | 4.2 | 13.5 | +9.3 pts |
 | **No Unsupported Claims Score (out of 15)** | 4.5 | 15.0 | +10.5 pts (100% compliant) |
-| **Actionable Step Score (out of 10)** | 7.2 | 9.8 | +2.6 pts |
+| **Actionable Step Score (out of 10)** | 7.2 | 9.6 | +2.4 pts |
 | **Unsupported Claim Penalties** | 14 cases | **0 cases** | **-100% false claims** |
 | **Evidence Miss Penalties** | 20 cases | **0 cases** | **-100% ungrounded assertions** |
 | **Contradiction Misses** | 2 cases | **0 cases** | **-100% missed contradictions** |

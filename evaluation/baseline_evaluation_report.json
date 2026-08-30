@@ -23,7 +23,7 @@
       "UNSUPPORTED_CLAIM": 14,
       "CONTRADICTION_MISS": 2
     },
-    "avg_latency_ms": 0.7
+    "avg_latency_ms": 0.5
   },
   "detailed_results": [
     {
@@ -42,12 +42,12 @@
       "failure_categories": [
         "EVIDENCE_MISS"
       ],
-      "latency_ms": 0.5671977996826172,
+      "latency_ms": 0.5249977111816406,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Generic eligibility claim lacking structured evidence mapping",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-002",
@@ -69,12 +69,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.5090236663818359,
+      "latency_ms": 1.058340072631836,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Primary need miss: predicted 'employment', expected one of ['housing']; Over-recommended resources for insufficient-info case: ['RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_household_income', 'housing_status_or_rent_information']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "notes": "Primary need miss: predicted 'employment', expected one of ['housing']; Over-recommended resources for insufficient-info case: ['RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['housing_status_or_rent_information', 'current_household_income']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-003",
@@ -94,12 +94,12 @@
         "RETRIEVAL_MISS",
         "EVIDENCE_MISS"
       ],
-      "latency_ms": 0.7381439208984375,
+      "latency_ms": 0.43272972106933594,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Primary need miss: predicted 'employment', expected one of ['documentation']; Resource miss: identified ['RES-EMP-001'], expected ['RES-DOC-001']; Generic eligibility claim lacking structured evidence mapping",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-004",
@@ -118,12 +118,12 @@
         "RETRIEVAL_MISS",
         "EVIDENCE_MISS"
       ],
-      "latency_ms": 0.5161762237548828,
+      "latency_ms": 0.0,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-EMP-002']; Generic eligibility claim lacking structured evidence mapping",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-005",
@@ -149,8 +149,8 @@
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Primary need miss: predicted 'employment', expected one of ['basic_support']; Over-recommended resources for insufficient-info case: ['RES-EMP-001', 'RES-BASIC-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_household_income', 'spouse_employment_status']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "notes": "Primary need miss: predicted 'employment', expected one of ['basic_support']; Over-recommended resources for insufficient-info case: ['RES-EMP-001', 'RES-BASIC-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['spouse_employment_status', 'current_household_income']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-006",
@@ -171,12 +171,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.8282661437988281,
+      "latency_ms": 1.0352134704589844,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-BASIC-001', 'RES-HOUS-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_household_income', 'exact_housing_status']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-HOUS-001', 'RES-BASIC-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['exact_housing_status', 'current_household_income']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-007",
@@ -197,12 +197,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.5433559417724609,
+      "latency_ms": 0.0,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-DOC-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_residence_status', 'relevant_address_documentation']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-008",
@@ -224,12 +224,12 @@
         "UNSUPPORTED_CLAIM",
         "CONTRADICTION_MISS"
       ],
-      "latency_ms": 0.0,
+      "latency_ms": 0.5261898040771484,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-EMP-002']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_primary_employment_status']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-009",
@@ -249,12 +249,12 @@
         "RETRIEVAL_MISS",
         "EVIDENCE_MISS"
       ],
-      "latency_ms": 1.5139579772949219,
+      "latency_ms": 0.5404949188232422,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Primary need miss: predicted 'employment', expected one of ['housing']; Over-recommended resources for insufficient-info case: ['RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-010",
@@ -275,12 +275,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.0,
+      "latency_ms": 0.5216598510742188,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-EMP-002']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['secondary_document']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-011",
@@ -302,12 +302,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 1.0077953338623047,
+      "latency_ms": 0.52642822265625,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Primary need miss: predicted 'housing', expected one of ['education', 'employment']; Resource miss: identified ['RES-HOUS-001'], expected ['RES-EDU-001', 'RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['children_school_status', 'parent_employment_status']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "notes": "Primary need miss: predicted 'housing', expected one of ['education', 'employment']; Resource miss: identified ['RES-HOUS-001'], expected ['RES-EMP-001', 'RES-EDU-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['parent_employment_status', 'children_school_status']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-012",
@@ -328,12 +328,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.5841255187988281,
+      "latency_ms": 0.5214214324951172,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Resource miss: identified ['RES-EMP-001'], expected ['RES-EMP-002', 'RES-DOC-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['exact_document_requested', 'employment_start_status']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-013",
@@ -355,12 +355,12 @@
         "UNSUPPORTED_CLAIM",
         "CONTRADICTION_MISS"
       ],
-      "latency_ms": 0.5061626434326172,
+      "latency_ms": 0.5214214324951172,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-DOC-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_location']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-014",
@@ -380,12 +380,12 @@
         "RETRIEVAL_MISS",
         "EVIDENCE_MISS"
       ],
-      "latency_ms": 0.5664825439453125,
+      "latency_ms": 0.5228519439697266,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Primary need miss: predicted 'employment', expected one of ['basic_support']; Partial resource match: identified ['RES-BASIC-001'] of ['RES-BASIC-001']; Generic eligibility claim lacking structured evidence mapping",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-015",
@@ -407,12 +407,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 2.833127975463867,
+      "latency_ms": 0.5648136138916016,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Primary need miss: predicted 'employment', expected one of ['housing', 'basic_support']; Resource miss: identified ['RES-EMP-001'], expected ['RES-BASIC-001', 'RES-HOUS-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_household_income', 'rent_details']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "notes": "Primary need miss: predicted 'employment', expected one of ['housing', 'basic_support']; Resource miss: identified ['RES-EMP-001'], expected ['RES-BASIC-001', 'RES-HOUS-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['rent_details', 'current_household_income']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-016",
@@ -432,12 +432,12 @@
         "RETRIEVAL_MISS",
         "EVIDENCE_MISS"
       ],
-      "latency_ms": 0.9543895721435547,
+      "latency_ms": 0.5257129669189453,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Primary need miss: predicted 'employment', expected one of ['other']; Over-recommended resources for insufficient-info case: ['RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-017",
@@ -458,12 +458,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.5104541778564453,
+      "latency_ms": 0.5464553833007812,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Over-recommended resources for insufficient-info case: ['RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['resource_specific_condition']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-018",
@@ -483,12 +483,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.0,
+      "latency_ms": 0.5230903625488281,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_location']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-019",
@@ -509,12 +509,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 1.5897750854492188,
+      "latency_ms": 0.5249977111816406,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-BASIC-001', 'RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['approximate_household_income']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-BASIC-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['approximate_household_income']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     },
     {
       "case_id": "CASE-020",
@@ -535,12 +535,12 @@
         "MISSING_INFO_MISS",
         "UNSUPPORTED_CLAIM"
       ],
-      "latency_ms": 0.5178451538085938,
+      "latency_ms": 0.6618499755859375,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EDU-001', 'RES-HOUS-001', 'RES-EMP-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['current_household_income', 'children_school_status', 'missing_document_type']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
-      "evaluated_at": "2026-08-30T07:44:35.386743"
+      "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-HOUS-001', 'RES-EDU-001']; Generic eligibility claim lacking structured evidence mapping; Failed to identify critical missing info: expected ['children_school_status', 'missing_document_type', 'current_household_income']; Unsupported eligibility claim: declared eligible despite unresolved missing info/contradictions",
+      "evaluated_at": "2026-08-30T08:31:50.938829"
     }
   ]
 }

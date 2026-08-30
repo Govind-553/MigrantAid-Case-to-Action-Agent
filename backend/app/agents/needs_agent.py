@@ -35,7 +35,7 @@ class NeedsAssessmentAgent:
         food_fact = profile.get_fact("food_need")
         income_fact = profile.get_fact("other_household_income")
         has_primary_food = bool(re.search(r"\b(food expenses|groceries|struggling to afford groceries|struggling for food|food need|ration support)\b", narrative_lower))
-        has_general_basic = bool(food_fact or (income_fact and income_fact.value is False) or re.search(r"\b(food|ration|basic support|no other income|subsistence)\b", narrative_lower))
+        has_general_basic = bool(food_fact or (income_fact and income_fact.value is False) or re.search(r"\b(food|ration|basic support|no other income|subsistence|lost one source of income|income loss|loss of income|lost job)\b", narrative_lower))
 
         if has_primary_food or has_general_basic:
             needs.append(
@@ -118,16 +118,26 @@ class NeedsAssessmentAgent:
                 )
             )
 
-        # Fallback if no specific category matched -> default to employment as general worker support
+        # Fallback if no specific category matched
         if not needs:
-            needs.append(
-                Need(
-                    category=NeedCategory.employment,
-                    priority=NeedPriority.medium,
-                    reason="General worker support and resource referral.",
-                    evidence_references=[],
+            if re.search(r"\b(specialized|specialised|unsupported|not represented|other)\b", narrative_lower):
+                needs.append(
+                    Need(
+                        category=NeedCategory.other,
+                        priority=NeedPriority.medium,
+                        reason="Specialized service requested not represented in standard taxonomy.",
+                        evidence_references=[],
+                    )
                 )
-            )
+            else:
+                needs.append(
+                    Need(
+                        category=NeedCategory.employment,
+                        priority=NeedPriority.medium,
+                        reason="General worker support and resource referral.",
+                        evidence_references=[],
+                    )
+                )
 
         return NeedsAssessment(
             case_id=profile.case_id,
