@@ -10,8 +10,8 @@ load_dotenv()
 class Settings(BaseModel):
     LLM_API_KEY: str = Field(default_factory=lambda: os.getenv("LLM_API_KEY", ""))
     LLM_MODEL: str = Field(default_factory=lambda: os.getenv("LLM_MODEL", "gemini-1.5-flash"))
-    EMBEDDING_MODEL: str = Field(default_factory=lambda: os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2"))
-    DATABASE_URL: str = Field(default_factory=lambda: os.getenv("DATABASE_URL", "sqlite:///./migrantaid.db"))
+    DATABASE_URL: str = Field(default_factory=lambda: os.getenv("DATABASE_URL", ""))
+    DIRECT_URL: str = Field(default_factory=lambda: os.getenv("DIRECT_URL", ""))
     APP_ENV: str = Field(default_factory=lambda: os.getenv("APP_ENV", "development"))
 
     @property

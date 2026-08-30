@@ -18,7 +18,7 @@
     "failure_category_distribution": {
       "RETRIEVAL_MISS": 10
     },
-    "avg_latency_ms": 2.0
+    "avg_latency_ms": 1.5
   },
   "detailed_results": [
     {
@@ -37,12 +37,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 9.303569793701172,
+      "latency_ms": 5.415678024291992,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001', 'RES-BASIC-001'] of ['RES-EMP-001', 'RES-BASIC-001']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-002",
@@ -58,12 +58,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 2.0449161529541016,
+      "latency_ms": 2.657651901245117,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-003",
@@ -79,12 +79,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 2.104043960571289,
+      "latency_ms": 1.4982223510742188,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-004",
@@ -100,12 +100,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 1.5208721160888672,
+      "latency_ms": 1.0941028594970703,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-005",
@@ -121,12 +121,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 1.0538101196289062,
+      "latency_ms": 1.0528564453125,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-006",
@@ -144,12 +144,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 4.260063171386719,
+      "latency_ms": 1.7457008361816406,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
-      "notes": "Partial resource match: identified ['RES-HOUS-001', 'RES-EMP-001', 'RES-BASIC-001'] of ['RES-HOUS-001', 'RES-EMP-001', 'RES-BASIC-001']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "notes": "Partial resource match: identified ['RES-EMP-001', 'RES-HOUS-001', 'RES-BASIC-001'] of ['RES-EMP-001', 'RES-HOUS-001', 'RES-BASIC-001']",
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-007",
@@ -167,12 +167,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.6858577728271484,
+      "latency_ms": 1.0025501251220703,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-DOC-001'] of ['RES-EMP-001', 'RES-DOC-001']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-008",
@@ -188,12 +188,12 @@
         "actionable_next_step": 6
       },
       "failure_categories": [],
-      "latency_ms": 1.7702579498291016,
+      "latency_ms": 0.5538463592529297,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.834784"
     },
     {
       "case_id": "CASE-009",
@@ -209,12 +209,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 1.207590103149414,
+      "latency_ms": 1.15966796875,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-010",
@@ -230,12 +230,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 1.2214183807373047,
+      "latency_ms": 0.5669593811035156,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-011",
@@ -253,12 +253,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 0.5192756652832031,
+      "latency_ms": 0.5295276641845703,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EDU-001'] of ['RES-EMP-001', 'RES-EDU-001']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-012",
@@ -276,12 +276,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.3589859008789062,
+      "latency_ms": 1.3816356658935547,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-002'] of ['RES-DOC-001', 'RES-EMP-002']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-013",
@@ -299,12 +299,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.5230178833007812,
+      "latency_ms": 1.4431476593017578,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-DOC-001']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-014",
@@ -322,12 +322,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.5702247619628906,
+      "latency_ms": 2.0101070404052734,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-BASIC-001'] of ['RES-BASIC-001']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-015",
@@ -345,12 +345,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 2.524852752685547,
+      "latency_ms": 1.6255378723144531,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-HOUS-001'] of ['RES-HOUS-001', 'RES-BASIC-001']",
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-016",
@@ -366,12 +366,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 0.5173683166503906,
+      "latency_ms": 1.2602806091308594,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.204680"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-017",
@@ -387,12 +387,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 1.2309551239013672,
+      "latency_ms": 1.0077953338623047,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.205960"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-018",
@@ -408,12 +408,12 @@
         "actionable_next_step": 10
       },
       "failure_categories": [],
-      "latency_ms": 0.5154609680175781,
+      "latency_ms": 1.6543865203857422,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": null,
-      "evaluated_at": "2026-08-30T08:37:39.205960"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-019",
@@ -431,12 +431,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 2.044200897216797,
+      "latency_ms": 0.7910728454589844,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001'] of ['RES-EMP-001', 'RES-BASIC-001']",
-      "evaluated_at": "2026-08-30T08:37:39.205960"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     },
     {
       "case_id": "CASE-020",
@@ -454,12 +454,12 @@
       "failure_categories": [
         "RETRIEVAL_MISS"
       ],
-      "latency_ms": 1.5461444854736328,
+      "latency_ms": 1.798868179321289,
       "model_calls": 1,
       "estimated_cost_usd": null,
       "raw_output_path": null,
       "notes": "Partial resource match: identified ['RES-EMP-001', 'RES-EDU-001', 'RES-HOUS-001'] of ['RES-EMP-001', 'RES-EDU-001', 'RES-HOUS-001']",
-      "evaluated_at": "2026-08-30T08:37:39.205960"
+      "evaluated_at": "2026-08-30T19:35:17.835453"
     }
   ]
 }

@@ -6,13 +6,25 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from contextlib import asynccontextmanager
+
 from app.api.routes import router as api_router
 from app.config import logger
+from app.db.connection import check_db_connection, close_db_pool, init_db_pool
+
+
+@asynccontextmanager
+async def lifespan(app_instance: FastAPI):
+    init_db_pool()
+    yield
+    close_db_pool()
+
 
 app = FastAPI(
     title="MigrantAid API",
     description="An evidence-backed case-to-action assistant for supporting migrant workers",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # Enable CORS for frontend integration
@@ -91,4 +103,9 @@ app.include_router(api_router)
 # Health Check Endpoint
 @app.get("/health", status_code=status.HTTP_200_OK)
 async def health_check():
-    return {"status": "ok"}
+    db_ok = check_db_connection()
+    return {
+        "status": "ok",
+        "database": "connected" if db_ok else "disconnected",
+    }
+

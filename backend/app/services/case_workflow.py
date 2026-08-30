@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from app.agents.orchestrator import CaseOrchestrator
+from app.db.repository import CaseRepository
 from app.schemas.domain import (
     AgentEvent,
     AgentEventType,
@@ -35,16 +36,17 @@ SOURCES_PATH = DATA_DIR / "sources.json"
 
 
 class CaseWorkflowService:
-    """Manages active cases, fact edits, re-verification, and review lifecycle."""
+    """Manages active cases, fact edits, re-verification, and review lifecycle with PostgreSQL persistence."""
 
     def __init__(self, kb: ResourceKB | None = None):
         self.kb = kb or load_resource_kb(RESOURCES_PATH, SOURCES_PATH)
         self.orchestrator = CaseOrchestrator()
+        self.repo = CaseRepository()
         self._cases: dict[str, CaseState] = {}
         self._case_counter = 1
 
     def create_case(self, narrative: str, case_id: str | None = None) -> CaseState:
-        """Create a new case from raw narrative and execute the agentic workflow."""
+        """Create a new case from raw narrative, execute the agentic workflow, and persist state."""
         if not case_id:
             case_id = f"CASE-LIVE-{self._case_counter:03d}"
             self._case_counter += 1
@@ -52,14 +54,35 @@ class CaseWorkflowService:
         logger.info(f"Creating case {case_id}")
         case_state = self.orchestrator.process_case(case_id, narrative, self.kb)
         self._cases[case_id] = case_state
+
+        try:
+            self.repo.save_case(case_state)
+        except Exception as e:
+            logger.error(f"Failed to persist case {case_id} to database: {e!s}")
+
         return case_state
 
     def get_case(self, case_id: str) -> CaseState | None:
-        """Retrieve full state for a given case ID."""
+        """Retrieve full state for a given case ID from database or memory cache."""
+        try:
+            db_case = self.repo.get_case(case_id)
+            if db_case:
+                self._cases[case_id] = db_case
+                return db_case
+        except Exception as e:
+            logger.warning(f"Database lookup failed for case {case_id}: {e!s}. Falling back to memory.")
+
         return self._cases.get(case_id)
 
     def list_cases(self) -> list[dict[str, Any]]:
-        """List summary info for all active cases."""
+        """List summary info for all cases from database or memory cache."""
+        try:
+            db_list = self.repo.list_cases()
+            if db_list:
+                return db_list
+        except Exception as e:
+            logger.warning(f"Database list failed: {e!s}. Falling back to memory cache.")
+
         summaries = []
         for cid, state in self._cases.items():
             primary_need = state.needs_assessment.primary_need.category.value if state.needs_assessment and state.needs_assessment.primary_need else "unknown"
@@ -115,6 +138,12 @@ class CaseWorkflowService:
         # Preserve previous trajectory
         new_state.trajectory = state.trajectory + new_state.trajectory
         self._cases[case_id] = new_state
+
+        try:
+            self.repo.save_case(new_state)
+        except Exception as e:
+            logger.error(f"Failed to save updated facts for case {case_id} to database: {e!s}")
+
         return new_state
 
     def submit_human_review(
@@ -166,8 +195,16 @@ class CaseWorkflowService:
             )
         )
 
+        self._cases[case_id] = state
+
+        try:
+            self.repo.save_case(state)
+        except Exception as e:
+            logger.error(f"Failed to save human review for case {case_id} to database: {e!s}")
+
         return state
 
 
 # Singleton service instance
 workflow_service = CaseWorkflowService()
+
