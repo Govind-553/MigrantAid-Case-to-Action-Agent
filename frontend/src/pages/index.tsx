@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Head from 'next/head';
+import { FileText, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { IntakeView } from '@/components/IntakeView';
 import { FactsView } from '@/components/FactsView';
@@ -9,153 +10,237 @@ import { ActionPlanView } from '@/components/ActionPlanView';
 import { HumanReviewView } from '@/components/HumanReviewView';
 import { TrajectoryView } from '@/components/TrajectoryView';
 import { BenchmarkDashboard } from '@/components/BenchmarkDashboard';
+import { WorkflowNav } from '@/components/ui/WorkflowNav';
+import { CaseStatusBar } from '@/components/ui/CaseStatusBar';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { ErrorState } from '@/components/ui/ErrorState';
 import { CaseFact, CaseState, HumanReview } from '@/types';
 import { createCase, updateCaseFacts, submitHumanReview } from '@/lib/api';
+import {
+  getAvailableStages,
+  getInitialStage,
+  WORKFLOW_STAGES,
+  type WorkflowStageId,
+} from '@/lib/workflow';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'casework' | 'benchmark'>('casework');
   const [currentCase, setCurrentCase] = useState<CaseState | null>(null);
+  const [activeStage, setActiveStage] = useState<WorkflowStageId>('intake');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleCreateCase = async (narrative: string, caseId?: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const state = await createCase(narrative, caseId);
-      setCurrentCase(state);
-    } catch (err: any) {
-      setError(err.message || 'Failed to process case with agentic pipeline.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const available = useMemo(
+    () => getAvailableStages(currentCase),
+    [currentCase]
+  );
 
-  const handleUpdateFacts = async (facts: CaseFact[]) => {
-    if (!currentCase) return;
-    setIsLoading(true);
-    setError(null);
-    try {
-      const updated = await updateCaseFacts(currentCase.case_id, facts);
-      setCurrentCase(updated);
-    } catch (err: any) {
-      setError(err.message || 'Failed to update facts and re-verify.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleCreateCase = useCallback(
+    async (narrative: string, caseId?: string) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const state = await createCase(narrative, caseId);
+        setCurrentCase(state);
+        setActiveStage(getInitialStage(state));
+        setActiveTab('casework');
+      } catch (err: any) {
+        setError(err.message || 'Unable to analyze this case right now.');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
-  const handleSubmitReview = async (decision: HumanReview['decision'], notes?: string) => {
+  const handleUpdateFacts = useCallback(
+    async (facts: CaseFact[]) => {
+      if (!currentCase) return;
+      setIsLoading(true);
+      setError(null);
+      try {
+        const updated = await updateCaseFacts(currentCase.case_id, facts);
+        setCurrentCase(updated);
+      } catch (err: any) {
+        setError(err.message || 'Unable to update facts and re-verify right now.');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [currentCase]
+  );
+
+  const handleSubmitReview = useCallback(
+    async (decision: HumanReview['decision'], notes?: string) => {
+      if (!currentCase) return;
+      setIsLoading(true);
+      setError(null);
+      try {
+        const updated = await submitHumanReview(currentCase.case_id, decision, notes);
+        setCurrentCase(updated);
+      } catch (err: any) {
+        setError(err.message || 'Unable to record your decision right now.');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [currentCase]
+  );
+
+  const goToNextStage = useCallback(() => {
     if (!currentCase) return;
-    setIsLoading(true);
-    setError(null);
-    try {
-      const updated = await submitHumanReview(currentCase.case_id, decision, notes);
-      setCurrentCase(updated);
-    } catch (err: any) {
-      setError(err.message || 'Failed to submit caseworker review decision.');
-    } finally {
-      setIsLoading(false);
+    const order: WorkflowStageId[] = WORKFLOW_STAGES.map((s) => s.id);
+    const idx = order.indexOf(activeStage);
+    for (let i = idx + 1; i < order.length; i++) {
+      if (available.has(order[i])) {
+        setActiveStage(order[i]);
+        return;
+      }
+    }
+  }, [activeStage, available, currentCase]);
+
+  const renderStage = () => {
+    if (!currentCase) return null;
+
+    switch (activeStage) {
+      case 'facts':
+        return currentCase.profile ? (
+          <FactsView
+            profile={currentCase.profile}
+            onUpdateFacts={handleUpdateFacts}
+            isLoading={isLoading}
+          />
+        ) : null;
+      case 'needs':
+        return currentCase.needs_assessment ? (
+          <NeedsView assessment={currentCase.needs_assessment} />
+        ) : null;
+      case 'resources':
+      case 'verification':
+        return <RecommendationsView recommendations={currentCase.verified_recommendations} />;
+      case 'action-plan':
+        return currentCase.action_plan ? (
+          <ActionPlanView actionPlan={currentCase.action_plan} />
+        ) : null;
+      case 'review':
+        return (
+          <HumanReviewView
+            review={currentCase.human_review}
+            onSubmitReview={handleSubmitReview}
+            isLoading={isLoading}
+          />
+        );
+      case 'trajectory':
+        return currentCase.trajectory && currentCase.trajectory.length > 0 ? (
+          <TrajectoryView trajectory={currentCase.trajectory} />
+        ) : null;
+      case 'intake':
+      default:
+        return <IntakeView onSubmit={handleCreateCase} isLoading={isLoading} />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Head>
         <title>MigrantAid — Case-to-Action Assistant</title>
+        <meta
+          name="description"
+          content="MigrantAid — turn messy community cases into evidence-backed, human-reviewed action plans."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
       <Header currentTab={activeTab} onTabChange={setActiveTab} />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Error notification */}
+      <main
+        id="main-content"
+        className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
+      >
         {error && (
-          <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 flex items-center justify-between shadow-sm">
-            <span>{error}</span>
-            <button
-              onClick={() => setError(null)}
-              className="text-rose-600 hover:text-rose-900 font-bold ml-4"
-            >
-              ✕
-            </button>
+          <div className="mb-6" role="alert">
+            <ErrorState
+              message={error}
+              onRetry={() => setError(null)}
+              retryLabel="Dismiss"
+            />
           </div>
         )}
 
         {activeTab === 'benchmark' ? (
           <BenchmarkDashboard />
         ) : (
-          <div className="space-y-8">
-            {/* Case Intake Section */}
-            <IntakeView onSubmit={handleCreateCase} isLoading={isLoading} />
+          <div className="space-y-6">
+            {/* Hero — shown on first screen before a case exists */}
+            {!currentCase && (
+              <div className="text-center max-w-2xl mx-auto px-2">
+                <span className="inline-flex items-center gap-2 text-xs font-semibold text-brand-700 bg-brand-50 border border-brand-200 rounded-full px-3 py-1">
+                  <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+                  AI assists. Human decides.
+                </span>
+                <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+                  Turn messy community cases into evidence-backed, human-reviewed action plans.
+                </h1>
+                <p className="mt-3 text-slate-500 text-sm sm:text-base">
+                  MigrantAid helps frontline workers turn an incomplete description into
+                  structured facts, prioritized needs, verified resource matches, and a clear
+                  action plan — with the human always in control.
+                </p>
+              </div>
+            )}
 
-            {/* Active Case Pipeline Views */}
+            {/* Case not yet created: full-width intake */}
+            {!currentCase && (
+              <IntakeView onSubmit={handleCreateCase} isLoading={isLoading} />
+            )}
+
+            {/* Active case: workflow layout */}
             {currentCase && (
-              <div className="space-y-8 animate-fadeIn">
-                {/* Status Bar */}
-                <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-xs font-mono font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
-                      {currentCase.case_id}
-                    </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                      Workflow Status:
-                    </span>
-                    <span className="text-xs font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full">
-                      {currentCase.workflow_state}
-                    </span>
+              <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6">
+                {/* Workflow navigation sidebar / mobile strip */}
+                <aside className="lg:pb-0">
+                  <div className="lg:sticky lg:top-20">
+                    <p className="hidden lg:block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+                      Case workflow
+                    </p>
+                    <WorkflowNav
+                      activeStage={activeStage}
+                      available={available}
+                      onSelect={setActiveStage}
+                    />
+                  </div>
+                </aside>
+
+                {/* Stage content */}
+                <div className="min-w-0 space-y-5">
+                  <CaseStatusBar caseState={currentCase} />
+
+                  <div key={activeStage} className="animate-fade-in">
+                    {renderStage() ?? (
+                      <Card>
+                        <p className="text-sm text-slate-500 text-center py-8">
+                          This part of the case has not been generated yet. Use{' '}
+                          <strong>Continue to next step</strong> or select another stage.
+                        </p>
+                      </Card>
+                    )}
                   </div>
 
-                  <div className="text-xs text-slate-500 flex items-center space-x-4">
-                    <span>
-                      Needs Identified: <strong>{currentCase.needs_assessment?.needs.length || 0}</strong>
-                    </span>
-                    <span>•</span>
-                    <span>
-                      Verified Recommendations: <strong>{currentCase.verified_recommendations.length || 0}</strong>
-                    </span>
-                    <span>•</span>
-                    <span>
-                      Action Steps: <strong>{currentCase.action_plan?.actions.length || 0}</strong>
-                    </span>
+                  {/* Continue affordance */}
+                  <div className="flex justify-end">
+                    {activeStage !== 'trajectory' && activeStage !== 'intake' && (
+                      <Button variant="secondary" size="md" onClick={goToNextStage}>
+                        Continue to next step
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Button>
+                    )}
                   </div>
                 </div>
-
-                {/* Section 1: Facts Review */}
-                {currentCase.profile && (
-                  <FactsView
-                    profile={currentCase.profile}
-                    onUpdateFacts={handleUpdateFacts}
-                    isLoading={isLoading}
-                  />
-                )}
-
-                {/* Section 2: Needs Assessment */}
-                {currentCase.needs_assessment && (
-                  <NeedsView assessment={currentCase.needs_assessment} />
-                )}
-
-                {/* Section 3: Verified Recommendations & Traceable Evidence */}
-                <RecommendationsView
-                  recommendations={currentCase.verified_recommendations}
-                />
-
-                {/* Section 4: Action Plan */}
-                {currentCase.action_plan && (
-                  <ActionPlanView actionPlan={currentCase.action_plan} />
-                )}
-
-                {/* Section 5: Human Review Gate */}
-                <HumanReviewView
-                  review={currentCase.human_review}
-                  onSubmitReview={handleSubmitReview}
-                  isLoading={isLoading}
-                />
-
-                {/* Section 6: Trajectory & Observability */}
-                {currentCase.trajectory && currentCase.trajectory.length > 0 && (
-                  <TrajectoryView trajectory={currentCase.trajectory} />
-                )}
               </div>
             )}
           </div>
@@ -165,7 +250,8 @@ export default function Home() {
       <footer className="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
         <p>MigrantAid — Evidence-Backed Case-to-Action Casework Assistant</p>
         <p className="mt-1 text-[11px] text-slate-400">
-          Strict Evidence Traceability • Human-in-the-Loop Governance • Deterministic Evaluation Rubric
+          Strict Evidence Traceability · Human-in-the-Loop Governance · Deterministic Evaluation
+          Rubric
         </p>
       </footer>
     </div>

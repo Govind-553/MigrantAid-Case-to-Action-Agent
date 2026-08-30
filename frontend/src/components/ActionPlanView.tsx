@@ -1,94 +1,109 @@
 import React from 'react';
-import { ListOrdered, CheckSquare, UserCheck, AlertCircle, ArrowRight } from 'lucide-react';
-import { ActionPlan, ActionItem } from '../types';
+import { ListOrdered, UserCheck, ArrowRight, AlertCircle } from 'lucide-react';
+import { Card } from '@/components/ui/Card';
+import { SectionHeader } from '@/components/ui/SectionHeader';
+import { StatusBadge, StatusTone } from '@/components/ui/StatusBadge';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { ActionPlan, ActionItem } from '@/types';
 
 interface ActionPlanViewProps {
   actionPlan: ActionPlan;
 }
 
+const PRIORITY_META: Record<
+  ActionItem['priority'],
+  { label: string; tone: StatusTone }
+> = {
+  critical: { label: 'Critical', tone: 'danger' },
+  high: { label: 'High priority', tone: 'warning' },
+  medium: { label: 'Standard', tone: 'info' },
+  low: { label: 'Low priority', tone: 'neutral' },
+};
+
 export const ActionPlanView: React.FC<ActionPlanViewProps> = ({ actionPlan }) => {
-  const getPriorityBadge = (priority: ActionItem['priority']) => {
-    switch (priority) {
-      case 'critical':
-        return (
-          <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200">
-            Critical Step
-          </span>
-        );
-      case 'high':
-        return (
-          <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">
-            High Priority
-          </span>
-        );
-      case 'medium':
-      default:
-        return (
-          <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-blue-100 text-blue-800 border border-blue-200">
-            Standard Step
-          </span>
-        );
-    }
-  };
-
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-      <div className="flex items-center space-x-2.5 mb-4 pb-3 border-b border-slate-100">
-        <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-          <ListOrdered className="h-5 w-5" />
-        </div>
-        <div>
-          <h3 className="text-base font-semibold text-slate-900">Sequential Action Plan</h3>
-          <p className="text-xs text-slate-500">
-            Prioritized step-by-step instructions for the caseworker and beneficiary with role assignments.
-          </p>
-        </div>
-      </div>
+    <Card>
+      <SectionHeader
+        icon={<ListOrdered className="h-5 w-5" />}
+        iconTone="amber"
+        title="Sequential Action Plan"
+        description="Prioritized, ordered next steps for the caseworker and beneficiary."
+      />
 
-      <div className="space-y-3">
-        {actionPlan.actions.map((act) => (
-          <div
-            key={act.step}
-            className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex items-start space-x-3"
-          >
-            {/* Step Number Badge */}
-            <div className="shrink-0 w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-sm">
-              {act.step}
-            </div>
+      {actionPlan.actions.length === 0 ? (
+        <EmptyState
+          icon={<ListOrdered className="h-6 w-6" />}
+          title="No action plan yet"
+          description="An ordered action plan will appear here after the case is analyzed."
+        />
+      ) : (
+        <ol className="space-y-0">
+          {actionPlan.actions.map((act) => {
+            const meta = PRIORITY_META[act.priority] ?? PRIORITY_META.medium;
+            return (
+              <li key={act.step} className="relative flex gap-4 pb-5 last:pb-0">
+                {/* Connector line */}
+                {act.step !== actionPlan.actions.length && (
+                  <span
+                    className="absolute left-[15px] top-8 bottom-0 w-px bg-slate-200"
+                    aria-hidden="true"
+                  />
+                )}
 
-            {/* Action Details */}
-            <div className="space-y-1 flex-1">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="text-sm font-semibold text-slate-900">{act.action}</span>
-                {getPriorityBadge(act.priority)}
-              </div>
-
-              <p className="text-xs text-slate-600 leading-relaxed">{act.reason}</p>
-
-              <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-slate-500">
-                <div className="flex items-center space-x-1">
-                  <UserCheck className="h-3.5 w-3.5 text-slate-400" />
-                  <span className="capitalize">Role: {act.responsible_role.replace(/_/g, ' ')}</span>
+                {/* Step number */}
+                <div className="shrink-0">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-white text-sm font-bold shadow-card ring-4 ring-brand-50">
+                    {act.step}
+                  </span>
                 </div>
 
-                {act.prerequisite && (
-                  <div className="flex items-center space-x-1 text-slate-500">
-                    <ArrowRight className="h-3 w-3 text-slate-400" />
-                    <span>Prerequisite: {act.prerequisite}</span>
+                {/* Step content */}
+                <div className="min-w-0 flex-1 pt-0.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-sm font-semibold text-slate-900 break-words">
+                      {act.action}
+                    </span>
+                    <StatusBadge tone={meta.tone} className="shrink-0">
+                      {meta.label}
+                    </StatusBadge>
                   </div>
-                )}
 
-                {act.unresolved_uncertainty && (
-                  <div className="flex items-center space-x-1 text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
-                    <AlertCircle className="h-3 w-3 text-amber-600" />
-                    <span>Uncertainty: {act.unresolved_uncertainty}</span>
+                  <p className="text-xs text-slate-600 leading-relaxed mt-1">{act.reason}</p>
+
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-2 text-[11px] text-slate-500">
+                    <div className="flex items-center gap-1">
+                      <UserCheck className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
+                      <span className="capitalize">
+                        {act.responsible_role.replace(/_/g, ' ')}
+                      </span>
+                    </div>
+
+                    {act.prerequisite && (
+                      <div className="flex items-center gap-1">
+                        <ArrowRight className="h-3 w-3 text-slate-400" aria-hidden="true" />
+                        <span>Before: {act.prerequisite}</span>
+                      </div>
+                    )}
+
+                    {act.evidence_reference && (
+                      <div className="flex items-center gap-1">
+                        <span>Evidence: {act.evidence_reference.replace(/_/g, ' ')}</span>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+
+                  {act.unresolved_uncertainty && (
+                    <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-warning.bg border border-warning.border text-[11px] text-warning.text">
+                      <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>{act.unresolved_uncertainty}</span>
+                    </div>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </Card>
   );
 };

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Send, FileText, Sparkles, AlertCircle, RefreshCw } from 'lucide-react';
+import { FileText, Sparkles, Info } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Field, inputClasses } from '@/components/ui/Field';
+import { cn } from '@/lib/cn';
 
 interface IntakeViewProps {
   onSubmit: (narrative: string, caseId?: string) => Promise<void>;
@@ -9,37 +13,37 @@ interface IntakeViewProps {
 const SAMPLE_CASES = [
   {
     id: 'CASE-001',
-    title: 'CASE-001: Unemployed worker with dependents',
+    title: 'Unemployed worker with dependents',
     category: 'Ordinary',
     text: 'A migrant worker in Pune recently lost his job. He has two children and says the household currently has no other income. He has an identity document and a bank account.',
   },
   {
     id: 'CASE-002',
-    title: 'CASE-002: Housing support with missing income (Incomplete)',
-    category: 'Incomplete Information',
+    title: 'Housing support with missing income',
+    category: 'Incomplete',
     text: "A migrant family living in Pune is struggling to pay rent after the main earner's work hours were reduced. They want to know what housing support may be available.",
   },
   {
     id: 'CASE-003',
-    title: 'CASE-003: Documentation help after relocation',
+    title: 'Documentation help after relocation',
     category: 'Documentation',
     text: 'A worker recently moved to Pune for work and needs help understanding which identity and address documents are needed to access local services. He has one identity document but no proof of current address.',
   },
   {
     id: 'CASE-008',
-    title: 'CASE-008: Contradictory employment statements',
+    title: 'Contradictory employment statements',
     category: 'Contradiction',
     text: 'A worker first says he is unemployed, but later says he is currently working part-time three days a week. He asks about employment support.',
   },
   {
     id: 'CASE-005',
-    title: 'CASE-005: Food & basic support with unknown spouse income',
+    title: 'Food & basic support, unknown spouse income',
     category: 'Basic Support',
     text: 'A worker says food expenses have become difficult after a recent job loss. He lives with his spouse and children, but does not know whether his spouse’s current income affects access to support.',
   },
   {
     id: 'CASE-006',
-    title: 'CASE-006: Multi-need (Housing + Employment + Food)',
+    title: 'Multi-need: housing + employment + food',
     category: 'Multi-Need',
     text: 'A migrant couple in Pune has recently lost one source of income and is behind on rent. They also want help finding new work. They have two school-age children.',
   },
@@ -48,108 +52,125 @@ const SAMPLE_CASES = [
 export const IntakeView: React.FC<IntakeViewProps> = ({ onSubmit, isLoading }) => {
   const [narrative, setNarrative] = useState(SAMPLE_CASES[0].text);
   const [selectedCaseId, setSelectedCaseId] = useState(SAMPLE_CASES[0].id);
+  const [touched, setTouched] = useState(false);
+
+  const hasContent = narrative.trim().length > 0;
+  const showValidation = touched && !hasContent;
 
   const handleSelectSample = (sample: typeof SAMPLE_CASES[0]) => {
     setSelectedCaseId(sample.id);
     setNarrative(sample.text);
+    setTouched(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setTouched(true);
     if (!narrative.trim() || isLoading) return;
     onSubmit(narrative, selectedCaseId || undefined);
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-      <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-        <div className="flex items-center space-x-2.5">
-          <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-            <FileText className="h-5 w-5" />
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-slate-900">Case Intake & Narrative</h2>
-            <p className="text-xs text-slate-500">
-              Input raw beneficiary story, interview notes, or select a standardized evaluation case
-            </p>
-          </div>
-        </div>
+    <Card>
+      <div className="mb-5">
+        <h2 className="text-xl font-semibold text-slate-900 leading-snug">
+          Describe the person&apos;s situation
+        </h2>
+        <p className="text-sm text-slate-500 mt-1">
+          Write the case in your own words — it doesn&apos;t need to be structured.
+          MigrantAid will turn it into an evidence-backed, human-reviewed action plan.
+        </p>
       </div>
 
-      {/* Preset Evaluation Case Selector */}
-      <div className="mb-4">
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-          Load Pre-Configured Evaluation Benchmark Case:
-        </label>
+      {/* Pre-loaded evaluation cases */}
+      <div className="mb-5">
+        <div className="flex items-center gap-2 mb-2">
+          <Info className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
+          <span className="text-xs font-semibold text-slate-600">
+            Load a pre-configured evaluation case to start quickly
+          </span>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {SAMPLE_CASES.map((s) => (
             <button
               key={s.id}
               type="button"
               onClick={() => handleSelectSample(s)}
-              className={`text-left p-2.5 rounded-lg border text-xs transition-all ${
+              aria-pressed={selectedCaseId === s.id}
+              className={cn(
+                'text-left p-2.5 rounded-lg border text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
                 selectedCaseId === s.id
-                  ? 'border-emerald-500 bg-emerald-50/50 ring-1 ring-emerald-400 font-medium text-emerald-900'
+                  ? 'border-brand-300 bg-brand-50 ring-1 ring-brand-300 text-brand-900'
                   : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100 text-slate-700'
-              }`}
+              )}
             >
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-slate-900">{s.id}</span>
-                <span className="text-[10px] bg-slate-200/70 text-slate-600 px-1.5 py-0.5 rounded">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-mono text-[11px] font-bold text-slate-900">
+                  {s.id}
+                </span>
+                <span className="text-[10px] bg-white text-slate-500 px-1.5 py-0.5 rounded border border-slate-200 whitespace-nowrap">
                   {s.category}
                 </span>
               </div>
-              <p className="truncate mt-1 text-slate-600">{s.title.split(': ')[1]}</p>
+              <p className="mt-1 line-clamp-2 text-slate-600">{s.title}</p>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Narrative Input Form */}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="narrative" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
-            Beneficiary Case Narrative / Interview Notes:
-          </label>
+      {/* Narrative form */}
+      <form onSubmit={handleSubmit} noValidate>
+        <Field
+          label="Beneficiary case narrative"
+          htmlFor="narrative"
+          hint={`${narrative.length} characters`}
+          required
+          error={showValidation ? 'Please describe the person’s situation to analyze the case.' : undefined}
+        >
           <textarea
             id="narrative"
-            rows={4}
+            rows={5}
             value={narrative}
             onChange={(e) => {
               setNarrative(e.target.value);
               setSelectedCaseId('');
+              setTouched(true);
             }}
-            placeholder="Type or paste messy beneficiary situation description here..."
-            className="w-full px-3.5 py-2.5 text-sm text-slate-800 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all placeholder:text-slate-400"
-            required
+            placeholder="e.g. A worker came to Pune from Bihar for work. He lost his job recently and has two children. He has Aadhaar and a bank account but is unsure what support is available."
+            aria-required="true"
+            aria-invalid={showValidation}
+            className={cn(
+              inputClasses,
+              'min-h-[120px] resize-y leading-relaxed',
+              showValidation && 'border-danger focus:border-danger focus:ring-danger/30'
+            )}
           />
-        </div>
+        </Field>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2 text-xs text-slate-500">
-            <Sparkles className="h-4 w-4 text-emerald-600" />
-            <span>Executes 6-stage pipeline: Intake → Needs → Matching → Verification → Action Planning → Quality Gate</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4">
+          <div className="flex items-center gap-2 text-xs text-slate-500">
+            <Sparkles className="h-4 w-4 text-brand-600" aria-hidden="true" />
+            <span className="hidden sm:inline">
+              6-stage pipeline: Intake → Needs → Matching → Verification → Action &rarr; Quality
+            </span>
+            <span className="sm:hidden">
+              6-stage assisted analysis pipeline
+            </span>
           </div>
 
-          <button
+          <Button
             type="submit"
-            disabled={isLoading || !narrative.trim()}
-            className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            size="lg"
+            loading={isLoading}
+            loadingLabel={isLoading ? 'Analyzing case…' : undefined}
+            disabled={!hasContent}
+            className="sm:w-auto"
           >
-            {isLoading ? (
-              <>
-                <RefreshCw className="h-4 w-4 animate-spin" />
-                <span>Running Agent Pipeline...</span>
-              </>
-            ) : (
-              <>
-                <Send className="h-4 w-4" />
-                <span>Process Case</span>
-              </>
-            )}
-          </button>
+            <FileText className="h-4 w-4" aria-hidden="true" />
+            Analyze Case
+          </Button>
         </div>
       </form>
-    </div>
+    </Card>
   );
 };
