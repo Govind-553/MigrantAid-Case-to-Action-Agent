@@ -1,0 +1,315 @@
+{
+  "dataset_version": "v1.0",
+  "system": "baseline",
+  "model": "gemini-1.5-flash",
+  "case_count": 20,
+  "total_latency_ms": 14.286279678344727,
+  "avg_latency_ms": 0.7143139839172363,
+  "results": [
+    {
+      "case_id": "CASE-001",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001",
+        "RES-BASIC-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\", \"RES-BASIC-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5671977996826172,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.289922+00:00"
+    },
+    {
+      "case_id": "CASE-002",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5090236663818359,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.290431+00:00"
+    },
+    {
+      "case_id": "CASE-003",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [
+        "current_address_proof"
+      ],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [\"current_address_proof\"], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.7381439208984375,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.291169+00:00"
+    },
+    {
+      "case_id": "CASE-004",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5161762237548828,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.291685+00:00"
+    },
+    {
+      "case_id": "CASE-005",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001",
+        "RES-BASIC-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\", \"RES-BASIC-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.0,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.292217+00:00"
+    },
+    {
+      "case_id": "CASE-006",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.8282661437988281,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.293046+00:00"
+    },
+    {
+      "case_id": "CASE-007",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5433559417724609,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.293589+00:00"
+    },
+    {
+      "case_id": "CASE-008",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.0,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.293589+00:00"
+    },
+    {
+      "case_id": "CASE-009",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 1.5139579772949219,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.295103+00:00"
+    },
+    {
+      "case_id": "CASE-010",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.0,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.295103+00:00"
+    },
+    {
+      "case_id": "CASE-011",
+      "primary_need": "housing",
+      "recommended_resource_ids": [
+        "RES-HOUS-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-HOUS-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-HOUS-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-HOUS-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"housing\", \"recommended_resource_ids\": [\"RES-HOUS-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-HOUS-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-HOUS-001 to apply for support.\"}",
+      "latency_ms": 1.0077953338623047,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.296111+00:00"
+    },
+    {
+      "case_id": "CASE-012",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5841255187988281,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.296695+00:00"
+    },
+    {
+      "case_id": "CASE-013",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5061626434326172,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.297201+00:00"
+    },
+    {
+      "case_id": "CASE-014",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001",
+        "RES-BASIC-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\", \"RES-BASIC-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001, RES-BASIC-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5664825439453125,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.297768+00:00"
+    },
+    {
+      "case_id": "CASE-015",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 2.833127975463867,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.300601+00:00"
+    },
+    {
+      "case_id": "CASE-016",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.9543895721435547,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.301555+00:00"
+    },
+    {
+      "case_id": "CASE-017",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5104541778564453,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.302066+00:00"
+    },
+    {
+      "case_id": "CASE-018",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.0,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.302066+00:00"
+    },
+    {
+      "case_id": "CASE-019",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 1.5897750854492188,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.303656+00:00"
+    },
+    {
+      "case_id": "CASE-020",
+      "primary_need": "employment",
+      "recommended_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "eligibility_assessment": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "evidence_text": "Beneficiary appears likely eligible for RES-EMP-001.",
+      "missing_information": [],
+      "next_step": "Visit or contact RES-EMP-001 to apply for support.",
+      "raw_response": "{\"primary_need\": \"employment\", \"recommended_resource_ids\": [\"RES-EMP-001\"], \"eligibility_assessment\": \"Beneficiary appears likely eligible for RES-EMP-001.\", \"missing_information\": [], \"next_step\": \"Visit or contact RES-EMP-001 to apply for support.\"}",
+      "latency_ms": 0.5178451538085938,
+      "model": "gemini-1.5-flash-offline-simulated",
+      "timestamp": "2026-08-30T07:43:17.304173+00:00"
+    }
+  ]
+}

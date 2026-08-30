@@ -1,0 +1,65 @@
+{
+  "dataset_version": "v1.0",
+  "sources": [
+    {
+      "source_id": "SRC-EMP-A",
+      "publisher": "Synthetic Dataset",
+      "title": "Synthetic Employment Support Centre A",
+      "reference": "SYNTHETIC-EMP-A",
+      "retrieved_at": "2026-08-01",
+      "verification_status": "verified",
+      "dataset_version": "v1.0",
+      "notes": "Synthetic resource for hackathon evaluation."
+    },
+    {
+      "source_id": "SRC-EMP-B",
+      "publisher": "Synthetic Dataset",
+      "title": "Synthetic Employment Support Centre B",
+      "reference": "SYNTHETIC-EMP-B",
+      "retrieved_at": "2026-08-01",
+      "verification_status": "verified",
+      "dataset_version": "v1.0",
+      "notes": "Synthetic resource with deliberate additional condition."
+    },
+    {
+      "source_id": "SRC-HOUS-001",
+      "publisher": "Synthetic Dataset",
+      "title": "Synthetic Housing Support Resource",
+      "reference": "SYNTHETIC-HOUS-001",
+      "retrieved_at": "2026-08-01",
+      "verification_status": "verified",
+      "dataset_version": "v1.0",
+      "notes": "Synthetic resource for hackathon evaluation."
+    },
+    {
+      "source_id": "SRC-BASIC-001",
+      "publisher": "Synthetic Dataset",
+      "title": "Synthetic Basic Support Resource",
+      "reference": "SYNTHETIC-BASIC-001",
+      "retrieved_at": "2026-08-01",
+      "verification_status": "verified",
+      "dataset_version": "v1.0",
+      "notes": "Synthetic resource for hackathon evaluation."
+    },
+    {
+      "source_id": "SRC-DOC-001",
+      "publisher": "Synthetic Dataset",
+      "title": "Synthetic Documentation Support Centre",
+      "reference": "SYNTHETIC-DOC-001",
+      "retrieved_at": "2026-08-01",
+      "verification_status": "verified",
+      "dataset_version": "v1.0",
+      "notes": "Synthetic resource for hackathon evaluation."
+    },
+    {
+      "source_id": "SRC-EDU-001",
+      "publisher": "Synthetic Dataset",
+      "title": "Synthetic Education Support Resource",
+      "reference": "SYNTHETIC-EDU-001",
+      "retrieved_at": "2026-08-01",
+      "verification_status": "verified",
+      "dataset_version": "v1.0",
+      "notes": "Synthetic resource for hackathon evaluation."
+    }
+  ]
+}

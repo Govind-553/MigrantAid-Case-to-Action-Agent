@@ -1,0 +1,345 @@
+{
+  "dataset_version": "v1.0",
+  "resources": [
+    {
+      "resource_id": "RES-EMP-001",
+      "name": "Synthetic Employment Support Centre A",
+      "category": "employment",
+      "geography": {
+        "country": "India",
+        "state": "Maharashtra",
+        "cities": [
+          "Pune"
+        ]
+      },
+      "description": "Synthetic employment-support resource for hackathon evaluation.",
+      "requirements": [
+        {
+          "requirement_id": "REQ-EMP-A-1",
+          "field": "employment_status",
+          "operator": "equals",
+          "value": "unemployed",
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-EMP-A-2",
+          "field": "location",
+          "operator": "equals",
+          "value": "Pune",
+          "importance": "critical",
+          "evidence_required": true
+        }
+      ],
+      "required_documents": [
+        {
+          "document": "identity_document",
+          "required": true
+        }
+      ],
+      "service_steps": [
+        "Confirm case facts",
+        "Review requirements",
+        "Contact support centre"
+      ],
+      "contact_information": {
+        "phone": "SYNTHETIC",
+        "website": "SYNTHETIC"
+      },
+      "source_id": "SRC-EMP-A",
+      "verified_at": "2026-08-01",
+      "status": "verified",
+      "dataset_version": "v1.0"
+    },
+    {
+      "resource_id": "RES-EMP-002",
+      "name": "Synthetic Employment Support Centre B",
+      "category": "employment",
+      "geography": {
+        "country": "India",
+        "state": "Maharashtra",
+        "cities": [
+          "Pune"
+        ]
+      },
+      "description": "Synthetic employment-support resource with an additional condition deliberately useful for testing uncertainty.",
+      "requirements": [
+        {
+          "requirement_id": "REQ-EMP-B-1",
+          "field": "employment_status",
+          "operator": "equals",
+          "value": "unemployed",
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-EMP-B-2",
+          "field": "secondary_document",
+          "operator": "exists",
+          "value": true,
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-EMP-B-3",
+          "field": "resource_specific_condition",
+          "operator": "equals",
+          "value": "confirmed",
+          "importance": "critical",
+          "evidence_required": true
+        }
+      ],
+      "required_documents": [
+        {
+          "document": "identity_document",
+          "required": true
+        },
+        {
+          "document": "secondary_document",
+          "required": true
+        }
+      ],
+      "service_steps": [
+        "Confirm additional condition",
+        "Confirm documents",
+        "Review employment support"
+      ],
+      "contact_information": {
+        "phone": "SYNTHETIC",
+        "website": "SYNTHETIC"
+      },
+      "source_id": "SRC-EMP-B",
+      "verified_at": "2026-08-01",
+      "status": "verified",
+      "dataset_version": "v1.0"
+    },
+    {
+      "resource_id": "RES-HOUS-001",
+      "name": "Synthetic Housing Support Resource",
+      "category": "housing",
+      "geography": {
+        "country": "India",
+        "state": "Maharashtra",
+        "cities": [
+          "Pune"
+        ]
+      },
+      "description": "Synthetic housing-support resource for evaluation.",
+      "requirements": [
+        {
+          "requirement_id": "REQ-HOUS-1",
+          "field": "location",
+          "operator": "equals",
+          "value": "Pune",
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-HOUS-2",
+          "field": "current_household_income",
+          "operator": "exists",
+          "value": true,
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-HOUS-3",
+          "field": "housing_need",
+          "operator": "equals",
+          "value": true,
+          "importance": "critical",
+          "evidence_required": true
+        }
+      ],
+      "required_documents": [
+        {
+          "document": "identity_document",
+          "required": true
+        },
+        {
+          "document": "housing_information",
+          "required": true
+        }
+      ],
+      "service_steps": [
+        "Confirm location",
+        "Confirm income and housing details",
+        "Review support options"
+      ],
+      "contact_information": {
+        "phone": "SYNTHETIC",
+        "website": "SYNTHETIC"
+      },
+      "source_id": "SRC-HOUS-001",
+      "verified_at": "2026-08-01",
+      "status": "verified",
+      "dataset_version": "v1.0"
+    },
+    {
+      "resource_id": "RES-BASIC-001",
+      "name": "Synthetic Basic Support Resource",
+      "category": "basic_support",
+      "geography": {
+        "country": "India",
+        "state": "Maharashtra",
+        "cities": [
+          "Pune"
+        ]
+      },
+      "description": "Synthetic basic-support resource for evaluation.",
+      "requirements": [
+        {
+          "requirement_id": "REQ-BASIC-1",
+          "field": "location",
+          "operator": "equals",
+          "value": "Pune",
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-BASIC-2",
+          "field": "food_need",
+          "operator": "equals",
+          "value": true,
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-BASIC-3",
+          "field": "current_household_income",
+          "operator": "exists",
+          "value": true,
+          "importance": "critical",
+          "evidence_required": true
+        }
+      ],
+      "required_documents": [
+        {
+          "document": "identity_document",
+          "required": true
+        }
+      ],
+      "service_steps": [
+        "Confirm household situation",
+        "Review requirements",
+        "Refer to support"
+      ],
+      "contact_information": {
+        "phone": "SYNTHETIC",
+        "website": "SYNTHETIC"
+      },
+      "source_id": "SRC-BASIC-001",
+      "verified_at": "2026-08-01",
+      "status": "verified",
+      "dataset_version": "v1.0"
+    },
+    {
+      "resource_id": "RES-DOC-001",
+      "name": "Synthetic Documentation Support Centre",
+      "category": "documentation",
+      "geography": {
+        "country": "India",
+        "state": "Maharashtra",
+        "cities": [
+          "Pune"
+        ]
+      },
+      "description": "Synthetic documentation guidance resource.",
+      "requirements": [
+        {
+          "requirement_id": "REQ-DOC-1",
+          "field": "location",
+          "operator": "equals",
+          "value": "Pune",
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-DOC-2",
+          "field": "documentation_need",
+          "operator": "exists",
+          "value": true,
+          "importance": "critical",
+          "evidence_required": true
+        }
+      ],
+      "required_documents": [
+        {
+          "document": "identity_document",
+          "required": false
+        }
+      ],
+      "service_steps": [
+        "Clarify document need",
+        "Review available documents",
+        "Prepare checklist"
+      ],
+      "contact_information": {
+        "phone": "SYNTHETIC",
+        "website": "SYNTHETIC"
+      },
+      "source_id": "SRC-DOC-001",
+      "verified_at": "2026-08-01",
+      "status": "verified",
+      "dataset_version": "v1.0"
+    },
+    {
+      "resource_id": "RES-EDU-001",
+      "name": "Synthetic Education Support Resource",
+      "category": "education",
+      "geography": {
+        "country": "India",
+        "state": "Maharashtra",
+        "cities": [
+          "Pune"
+        ]
+      },
+      "description": "Synthetic education-support resource.",
+      "requirements": [
+        {
+          "requirement_id": "REQ-EDU-1",
+          "field": "location",
+          "operator": "equals",
+          "value": "Pune",
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-EDU-2",
+          "field": "children",
+          "operator": "greater_than",
+          "value": 0,
+          "importance": "critical",
+          "evidence_required": true
+        },
+        {
+          "requirement_id": "REQ-EDU-3",
+          "field": "children_school_status",
+          "operator": "exists",
+          "value": true,
+          "importance": "critical",
+          "evidence_required": true
+        }
+      ],
+      "required_documents": [
+        {
+          "document": "child_or_school_information",
+          "required": true
+        }
+      ],
+      "service_steps": [
+        "Confirm children and school status",
+        "Review support options",
+        "Prepare referral"
+      ],
+      "contact_information": {
+        "phone": "SYNTHETIC",
+        "website": "SYNTHETIC"
+      },
+      "source_id": "SRC-EDU-001",
+      "verified_at": "2026-08-01",
+      "status": "verified",
+      "dataset_version": "v1.0"
+    }
+  ]
+}

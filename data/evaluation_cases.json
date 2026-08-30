@@ -1,0 +1,670 @@
+{
+  "dataset_version": "v1.0",
+  "status": "synthetic_initial",
+  "case_count": 20,
+  "freeze_status": "NOT_FROZEN",
+  "cases": [
+    {
+      "case_id": "CASE-001",
+      "title": "Recently unemployed worker",
+      "category": [
+        "ordinary"
+      ],
+      "difficulty": "easy",
+      "narrative": "A migrant worker in Pune recently lost his job. He has two children and says the household currently has no other income. He has an identity document and a bank account.",
+      "known_facts": {
+        "location": "Pune",
+        "employment_status": "unemployed",
+        "dependents": 2,
+        "other_household_income": false,
+        "identity_document": true,
+        "bank_account": true
+      },
+      "known_needs": [
+        "basic_support",
+        "employment"
+      ],
+      "critical_missing_information": [],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-EMP-001",
+        "RES-BASIC-001"
+      ],
+      "expected_resource_status": "potential_or_strong_match",
+      "expected_actions": [
+        "Review employment support resource",
+        "Assess basic-support resource",
+        "Confirm current household details"
+      ],
+      "scoring_notes": "Tests straightforward extraction, two needs, and evidence-backed matching."
+    },
+    {
+      "case_id": "CASE-002",
+      "title": "Housing support with missing income",
+      "category": [
+        "incomplete_information"
+      ],
+      "difficulty": "medium",
+      "narrative": "A migrant family living in Pune is struggling to pay rent after the main earner's work hours were reduced. They want to know what housing support may be available.",
+      "known_facts": {
+        "location": "Pune",
+        "employment_status": "reduced_hours",
+        "housing_need": true,
+        "dependents": "family"
+      },
+      "known_needs": [
+        "housing"
+      ],
+      "critical_missing_information": [
+        "current_household_income",
+        "housing_status_or_rent_information"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-HOUS-001"
+      ],
+      "expected_resource_status": "insufficient_information",
+      "expected_actions": [
+        "Ask current household income",
+        "Ask relevant housing/rent details",
+        "Then evaluate housing resource"
+      ],
+      "scoring_notes": "The correct behavior is to identify missing information rather than claim eligibility."
+    },
+    {
+      "case_id": "CASE-003",
+      "title": "Documentation help after relocation",
+      "category": [
+        "ordinary",
+        "documentation"
+      ],
+      "difficulty": "easy",
+      "narrative": "A worker recently moved to Pune for work and needs help understanding which identity and address documents are needed to access local services. He has one identity document but no proof of current address.",
+      "known_facts": {
+        "location": "Pune",
+        "recently_relocated": true,
+        "identity_document": true,
+        "current_address_proof": false
+      },
+      "known_needs": [
+        "documentation"
+      ],
+      "critical_missing_information": [],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-DOC-001"
+      ],
+      "expected_resource_status": "strong_or_potential_match",
+      "expected_actions": [
+        "Review documentation support",
+        "Identify acceptable address evidence",
+        "Prepare document checklist"
+      ],
+      "scoring_notes": "Tests document-state extraction and practical next steps."
+    },
+    {
+      "case_id": "CASE-004",
+      "title": "Worker seeking employment assistance",
+      "category": [
+        "ordinary"
+      ],
+      "difficulty": "easy",
+      "narrative": "A migrant worker in Pune is currently unemployed and wants help finding local employment services. He can provide an identity document and phone number.",
+      "known_facts": {
+        "location": "Pune",
+        "employment_status": "unemployed",
+        "identity_document": true,
+        "phone_available": true
+      },
+      "known_needs": [
+        "employment"
+      ],
+      "critical_missing_information": [],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-EMP-001",
+        "RES-EMP-002"
+      ],
+      "expected_resource_status": "multiple_possible_matches",
+      "expected_actions": [
+        "Compare employment resources",
+        "Choose next contact step based on requirements"
+      ],
+      "scoring_notes": "Tests multiple relevant resources."
+    },
+    {
+      "case_id": "CASE-005",
+      "title": "Basic support but household income unknown",
+      "category": [
+        "incomplete_information"
+      ],
+      "difficulty": "medium",
+      "narrative": "A worker says food expenses have become difficult after a recent job loss. He lives with his spouse and children, but does not know whether his spouse's current income affects access to support.",
+      "known_facts": {
+        "employment_status": "recently_unemployed",
+        "household_members": "spouse_and_children",
+        "food_need": true,
+        "spouse_income": "unknown"
+      },
+      "known_needs": [
+        "basic_support"
+      ],
+      "critical_missing_information": [
+        "current_household_income",
+        "spouse_employment_status"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-BASIC-001"
+      ],
+      "expected_resource_status": "insufficient_information",
+      "expected_actions": [
+        "Ask household income",
+        "Clarify spouse employment",
+        "Then evaluate basic-support resource"
+      ],
+      "scoring_notes": "Tests targeted questions and avoidance of premature eligibility."
+    },
+    {
+      "case_id": "CASE-006",
+      "title": "Family with housing and employment needs",
+      "category": [
+        "multi_need"
+      ],
+      "difficulty": "medium",
+      "narrative": "A migrant couple in Pune has recently lost one source of income and is behind on rent. They also want help finding new work. They have two school-age children.",
+      "known_facts": {
+        "location": "Pune",
+        "household": "couple_with_two_children",
+        "one_earner_unemployed": true,
+        "rent_arrears": true
+      },
+      "known_needs": [
+        "housing",
+        "employment",
+        "basic_support"
+      ],
+      "critical_missing_information": [
+        "current_household_income",
+        "exact_housing_status"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-HOUS-001",
+        "RES-EMP-001",
+        "RES-BASIC-001"
+      ],
+      "expected_resource_status": "multiple_possible_matches",
+      "expected_actions": [
+        "Prioritize immediate housing risk",
+        "Assess employment support",
+        "Clarify household income"
+      ],
+      "scoring_notes": "Tests prioritization rather than returning an unranked list."
+    },
+    {
+      "case_id": "CASE-007",
+      "title": "Ambiguous relocation situation",
+      "category": [
+        "ambiguous"
+      ],
+      "difficulty": "medium",
+      "narrative": "A worker says he has moved several times for work and is now staying in Pune temporarily. He needs help with documents and employment but is not sure where his permanent address is considered.",
+      "known_facts": {
+        "current_location": "Pune",
+        "residence_status": "temporary",
+        "relocation_history": "multiple",
+        "needs": [
+          "documentation",
+          "employment"
+        ]
+      },
+      "known_needs": [
+        "documentation",
+        "employment"
+      ],
+      "critical_missing_information": [
+        "current_residence_status",
+        "relevant_address_documentation"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-DOC-001",
+        "RES-EMP-001"
+      ],
+      "expected_resource_status": "potential_match",
+      "expected_actions": [
+        "Clarify current residence status",
+        "Review documentation support",
+        "Then evaluate employment options"
+      ],
+      "scoring_notes": "Tests ambiguity and the need for focused clarification."
+    },
+    {
+      "case_id": "CASE-008",
+      "title": "Contradictory employment information",
+      "category": [
+        "contradictory"
+      ],
+      "difficulty": "hard",
+      "narrative": "A worker first says he is unemployed, but later says he is currently working part-time three days a week. He asks about employment support.",
+      "known_facts": {
+        "employment_status": "conflicting_unemployed_and_part_time",
+        "part_time_work": true
+      },
+      "known_needs": [
+        "employment"
+      ],
+      "critical_missing_information": [
+        "current_primary_employment_status"
+      ],
+      "contradictions": [
+        "unemployed_vs_part_time_employment"
+      ],
+      "expected_resource_ids": [
+        "RES-EMP-001",
+        "RES-EMP-002"
+      ],
+      "expected_resource_status": "conflict_detected",
+      "expected_actions": [
+        "Flag contradiction",
+        "Clarify current employment status",
+        "Do not finalize a match until clarified"
+      ],
+      "scoring_notes": "Critical safety case. A strong system must surface the contradiction."
+    },
+    {
+      "case_id": "CASE-009",
+      "title": "No verified housing match",
+      "category": [
+        "no_verified_match"
+      ],
+      "difficulty": "hard",
+      "narrative": "A migrant worker in a location outside the coverage area of the available housing resources asks for housing assistance. The worker has urgent rent concerns.",
+      "known_facts": {
+        "location": "Outside_Pune_Coverage",
+        "housing_need": true,
+        "urgent_rent_concern": true
+      },
+      "known_needs": [
+        "housing"
+      ],
+      "critical_missing_information": [],
+      "contradictions": [],
+      "expected_resource_ids": [],
+      "expected_resource_status": "no_verified_match",
+      "expected_actions": [
+        "State that no verified resource match was found",
+        "Suggest human investigation or additional resource lookup"
+      ],
+      "scoring_notes": "Tests refusal to fabricate a resource."
+    },
+    {
+      "case_id": "CASE-010",
+      "title": "Multiple employment options with missing document",
+      "category": [
+        "multiple_possible_matches"
+      ],
+      "difficulty": "medium",
+      "narrative": "An unemployed migrant worker in Pune wants employment assistance. He has an identity document but does not currently have the document requested by one of the employment centres.",
+      "known_facts": {
+        "location": "Pune",
+        "employment_status": "unemployed",
+        "identity_document": true,
+        "secondary_document": "missing"
+      },
+      "known_needs": [
+        "employment"
+      ],
+      "critical_missing_information": [
+        "secondary_document"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-EMP-001",
+        "RES-EMP-002"
+      ],
+      "expected_resource_status": "multiple_possible_matches",
+      "expected_actions": [
+        "Compare document requirements",
+        "Identify resource that can proceed with available documents",
+        "Create document follow-up"
+      ],
+      "scoring_notes": "Tests requirement-level comparison."
+    },
+    {
+      "case_id": "CASE-011",
+      "title": "Education need for children",
+      "category": [
+        "multi_need"
+      ],
+      "difficulty": "medium",
+      "narrative": "A migrant family has two children and recently changed cities. The parents need help finding education support and also want employment assistance for one parent.",
+      "known_facts": {
+        "household": "family",
+        "children": 2,
+        "recently_relocated": true,
+        "parent_one_needs_employment": true
+      },
+      "known_needs": [
+        "education",
+        "employment"
+      ],
+      "critical_missing_information": [
+        "children_school_status",
+        "parent_employment_status"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-EDU-001",
+        "RES-EMP-001"
+      ],
+      "expected_resource_status": "potential_match",
+      "expected_actions": [
+        "Clarify children's current school status",
+        "Clarify parent's employment status",
+        "Evaluate education and employment resources"
+      ],
+      "scoring_notes": "Tests multi-need extraction and targeted questions."
+    },
+    {
+      "case_id": "CASE-012",
+      "title": "Documentation and employment overlap",
+      "category": [
+        "ambiguous",
+        "multi_need"
+      ],
+      "difficulty": "hard",
+      "narrative": "A worker says an employer asked for additional documents before allowing him to start work. He has an identity document but is unclear whether the request is for identity, address, or employment records.",
+      "known_facts": {
+        "identity_document": true,
+        "employer_document_request": true,
+        "requested_document_type": "unknown"
+      },
+      "known_needs": [
+        "documentation",
+        "employment"
+      ],
+      "critical_missing_information": [
+        "exact_document_requested",
+        "employment_start_status"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-DOC-001",
+        "RES-EMP-002"
+      ],
+      "expected_resource_status": "potential_match",
+      "expected_actions": [
+        "Ask exactly which document the employer requested",
+        "Clarify employment status",
+        "Provide documentation guidance"
+      ],
+      "scoring_notes": "Tests ambiguity and requirement-specific clarification."
+    },
+    {
+      "case_id": "CASE-013",
+      "title": "Contradictory location information",
+      "category": [
+        "contradictory"
+      ],
+      "difficulty": "hard",
+      "narrative": "The case notes say the worker currently lives in Pune, but the worker says he has already left Pune and is currently staying in another city.",
+      "known_facts": {
+        "location": "conflicting_pune_vs_other_city",
+        "previous_location": "Pune",
+        "current_location": "unknown"
+      },
+      "known_needs": [
+        "employment",
+        "documentation"
+      ],
+      "critical_missing_information": [
+        "current_location"
+      ],
+      "contradictions": [
+        "location conflict"
+      ],
+      "expected_resource_ids": [
+        "RES-EMP-001",
+        "RES-DOC-001"
+      ],
+      "expected_resource_status": "conflict_detected",
+      "expected_actions": [
+        "Clarify current location",
+        "Do not apply location-specific resource rules until clarified"
+      ],
+      "scoring_notes": "Tests geographic requirement safety."
+    },
+    {
+      "case_id": "CASE-014",
+      "title": "Basic support with clear facts",
+      "category": [
+        "ordinary"
+      ],
+      "difficulty": "easy",
+      "narrative": "A recently unemployed migrant worker in Pune lives alone and reports immediate difficulty buying food. He has an identity document and current address information.",
+      "known_facts": {
+        "location": "Pune",
+        "employment_status": "unemployed",
+        "household_size": 1,
+        "food_need": true,
+        "identity_document": true,
+        "address_information": true
+      },
+      "known_needs": [
+        "basic_support"
+      ],
+      "critical_missing_information": [],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-BASIC-001"
+      ],
+      "expected_resource_status": "strong_or_potential_match",
+      "expected_actions": [
+        "Review basic-support resource",
+        "Confirm any resource-specific requirement before referral"
+      ],
+      "scoring_notes": "Straightforward case for checking core workflow."
+    },
+    {
+      "case_id": "CASE-015",
+      "title": "Housing need with family dependents",
+      "category": [
+        "ordinary",
+        "multi_need"
+      ],
+      "difficulty": "medium",
+      "narrative": "A migrant worker in Pune is struggling to pay rent and supports a spouse and two children. The worker is still employed but has recently had reduced hours.",
+      "known_facts": {
+        "location": "Pune",
+        "employment_status": "reduced_hours",
+        "dependents": 3,
+        "housing_need": true
+      },
+      "known_needs": [
+        "housing",
+        "basic_support"
+      ],
+      "critical_missing_information": [
+        "current_household_income",
+        "rent_details"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-HOUS-001",
+        "RES-BASIC-001"
+      ],
+      "expected_resource_status": "potential_match",
+      "expected_actions": [
+        "Ask current household income",
+        "Ask rent/housing details",
+        "Assess housing first due to immediate risk"
+      ],
+      "scoring_notes": "Tests prioritization and missing information."
+    },
+    {
+      "case_id": "CASE-016",
+      "title": "No match due to unsupported category",
+      "category": [
+        "no_verified_match"
+      ],
+      "difficulty": "medium",
+      "narrative": "A migrant worker asks for a specialized service that is not represented in the approved resource dataset. No other need is clearly stated.",
+      "known_facts": {
+        "requested_service": "unsupported_specialized_service"
+      },
+      "known_needs": [
+        "other"
+      ],
+      "critical_missing_information": [],
+      "contradictions": [],
+      "expected_resource_ids": [],
+      "expected_resource_status": "no_verified_match",
+      "expected_actions": [
+        "State that no verified resource exists in the approved dataset",
+        "Recommend human investigation or expansion of the approved resource set"
+      ],
+      "scoring_notes": "Tests knowledge-base boundary and non-hallucination."
+    },
+    {
+      "case_id": "CASE-017",
+      "title": "Challenging plausible resource trap",
+      "category": [
+        "challenging"
+      ],
+      "difficulty": "hard",
+      "narrative": "A recently unemployed migrant worker in Pune appears to match an employment support service. However, the resource requires a condition that the case description never confirms. The worker asks, 'Am I definitely eligible?'",
+      "known_facts": {
+        "location": "Pune",
+        "employment_status": "unemployed",
+        "resource_condition": "unknown"
+      },
+      "known_needs": [
+        "employment"
+      ],
+      "critical_missing_information": [
+        "resource_specific_condition"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-EMP-002"
+      ],
+      "expected_resource_status": "potential_match_or_insufficient_information",
+      "expected_actions": [
+        "Do not say definitely eligible",
+        "Identify missing condition",
+        "Ask targeted question or request verification"
+      ],
+      "scoring_notes": "Primary challenging case. The system should resist a confident but unsupported answer."
+    },
+    {
+      "case_id": "CASE-018",
+      "title": "Challenging evidence mismatch",
+      "category": [
+        "challenging"
+      ],
+      "difficulty": "hard",
+      "narrative": "A worker's narrative suggests a resource may help, but the approved resource record has a geographic limitation that does not clearly include the worker's current location. The worker has recently moved.",
+      "known_facts": {
+        "recently_moved": true,
+        "current_location": "unclear",
+        "resource_geography": "limited"
+      },
+      "known_needs": [
+        "employment"
+      ],
+      "critical_missing_information": [
+        "current_location"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-EMP-001"
+      ],
+      "expected_resource_status": "insufficient_information",
+      "expected_actions": [
+        "Ask current location",
+        "Check geographic scope",
+        "Do not present resource as confirmed"
+      ],
+      "scoring_notes": "Tests whether retrieval relevance is incorrectly treated as proof."
+    },
+    {
+      "case_id": "CASE-019",
+      "title": "Family income ambiguity",
+      "category": [
+        "incomplete_information",
+        "ambiguous"
+      ],
+      "difficulty": "medium",
+      "narrative": "A worker lost his job and says the family has 'almost no income.' His spouse works occasionally, but the worker cannot estimate the household's current monthly income.",
+      "known_facts": {
+        "worker_employment": "unemployed",
+        "spouse_employment": "occasional",
+        "household_income": "unknown"
+      },
+      "known_needs": [
+        "basic_support",
+        "employment"
+      ],
+      "critical_missing_information": [
+        "approximate_household_income"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-BASIC-001",
+        "RES-EMP-001"
+      ],
+      "expected_resource_status": "potential_match",
+      "expected_actions": [
+        "Ask approximate household income",
+        "Clarify spouse's current work pattern",
+        "Evaluate both support and employment options"
+      ],
+      "scoring_notes": "Tests ambiguity in a key requirement."
+    },
+    {
+      "case_id": "CASE-020",
+      "title": "Complete multi-need case",
+      "category": [
+        "multi_need",
+        "multiple_possible_matches"
+      ],
+      "difficulty": "hard",
+      "narrative": "A migrant family in Pune has two children. One parent is unemployed, the family is behind on rent, and they have identity documents but are missing one supporting document. They want help with employment, housing, and education.",
+      "known_facts": {
+        "location": "Pune",
+        "children": 2,
+        "one_parent_unemployed": true,
+        "rent_arrears": true,
+        "identity_documents": true,
+        "supporting_document": "missing"
+      },
+      "known_needs": [
+        "employment",
+        "housing",
+        "education"
+      ],
+      "critical_missing_information": [
+        "current_household_income",
+        "children_school_status",
+        "missing_document_type"
+      ],
+      "contradictions": [],
+      "expected_resource_ids": [
+        "RES-EMP-001",
+        "RES-HOUS-001",
+        "RES-EDU-001"
+      ],
+      "expected_resource_status": "multiple_possible_matches",
+      "expected_actions": [
+        "Prioritize immediate housing risk",
+        "Ask household income",
+        "Clarify children's school status",
+        "Identify missing document",
+        "Evaluate employment support"
+      ],
+      "scoring_notes": "End-to-end stress test of extraction, prioritization, missing information, and multiple resources."
+    }
+  ]
+}
