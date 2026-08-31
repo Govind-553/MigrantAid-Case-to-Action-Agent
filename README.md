@@ -99,18 +99,18 @@ MigrantAid is an **agentic workflow**, not a single chatbot. An explicit Python 
 ## 4. End-to-End Case-to-Action Flow
 
 ```mermaid
-flowchart TD
-    A[Case Narrative] --> B[Case Intake / Fact Extraction]
+flowchart LR
+    A[Case Narrative] --> B[Intake & Facts]
     B --> C[Needs Assessment]
     C --> D[Resource Matching]
-    D --> E[Verification]
-    E --> F[Action Planning]
+    D --> E[Deterministic Verification]
+    E --> F[Action Plan]
     F --> G[Quality & Safety Check]
     G --> H[Human Review]
-    H --> I[Caseworker Decision]
-    I --> J[Action / Follow-up]
+    H --> I[Decision / Follow-up]
 
     M[Approved Resource Knowledge Base] -.-> D
+    M -.-> E
 ```
 
 The pipeline stages above map directly to the implemented `CaseOrchestrator` stages: `intake`, `needs_assessment`, `matching_and_verification`, `action_planning`, `quality_check`, and `human_review`. The final `CaseState` also carries a full execution trajectory (see `Traces.md`).
@@ -127,7 +127,7 @@ The pipeline stages above map directly to the implemented `CaseOrchestrator` sta
 | **Backend** | Python, FastAPI, Uvicorn |
 | **Data validation** | Pydantic v2 (typed domain schemas) |
 | **AI / LLM** | Google Gen AI SDK (`google-genai`) — Gemini, configured via environment variables |
-| **Database** | Prisma (PostgreSQL) via `psycopg` (psycopg3) + `psycopg_pool` connection pooling |
+| **Database** | PostgreSQL via `psycopg` (psycopg3) + `psycopg_pool` connection pooling |
 | **Config / env** | `python-dotenv` (`.env`) |
 | **Testing** | pytest, pytest-asyncio, httpx |
 | **Linting / formatting** | ruff |
@@ -215,7 +215,7 @@ The backend integrates **PostgreSQL** for persistent case state, using `psycopg`
 
 ### Prerequisites
 
-- **Python 3.11+**
+- **Python 3.9.13** (verified in the project's virtual environment)
 - **Node.js 20+**
 - (Optional) A PostgreSQL instance for persistent storage; not required for in-memory demo mode.
 
@@ -369,4 +369,4 @@ The following reflect the current implementation and realistic next steps; imple
 
 ## 15. Acknowledgement
 
-This project was developed as part of the Micro1 Frontier Challenge. I am grateful to Micro1 for providing this opportunity to work on a meaningful real-world problem and to build MigrantAid as part of the challenge.
+This project was developed as part of the Micro1 Frontier Challenge. I am grateful to Micro1 for providing this opportunity to build and demonstrate this project.

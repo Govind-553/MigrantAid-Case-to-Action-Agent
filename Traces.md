@@ -118,7 +118,7 @@ The grouped UI timeline shows the same journey, and each card expands to reveal 
 
 ## 7. Example `AgentEvent`
 
-An illustrative (non-sensitive) trajectory event in JSON form:
+The following is **illustrative example data only** — not a live or recorded value — shown to convey the shape of a single non-sensitive trajectory event in JSON form:
 
 ```json
 {
@@ -127,7 +127,7 @@ An illustrative (non-sensitive) trajectory event in JSON form:
   "agent": "IntakeAgent",
   "event_type": "stage_complete",
   "input_summary": "Case narrative (412 chars)",
-  "output_summary": "Extracted 7 facts, 3 missing fields, 1 contradictions",
+  "output_summary": "Extracted 7 facts, 3 missing fields, 1 contradiction",
   "retry_count": 0,
   "latency_ms": 1280.5,
   "timestamp": "2026-08-31T10:20:03Z"
