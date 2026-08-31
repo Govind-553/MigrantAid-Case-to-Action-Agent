@@ -49,6 +49,9 @@ coverage.xml
 *.db-shm
 *.db-wal
 
+!frontend/src/lib/
+!frontend/src/lib/*
+
 # Node/Frontend
 node_modules/
 .next/
