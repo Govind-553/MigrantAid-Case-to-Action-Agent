@@ -28,6 +28,77 @@ If a change has not been evaluated yet, mark the result as `PENDING`.
 
 ---
 
+## Iteration: Demo Polish — 4 Targeted Corrections
+
+**Date:** 2026-08-31  
+**Version:** v1.3 (demo polish)  
+**Scope:** Frontend UI corrections + backend semantic fix. No architectural changes. No new agents.
+
+### Change 1 — Human Review Semantics
+
+**Previous behavior:**  
+Caseworker selecting "Approve" in Human Review triggered `workflow_state = "APPROVED"`. The CaseStatusBar rendered this as a green success badge labelled "APPROVED", which could be misread as "eligibility approved by the system". The HumanReview button was labelled "Approve" without clarifying what was being approved.
+
+**Observed problem:**  
+UI implied AI eligibility approval, violating the core product rule: "MigrantAid never determines eligibility — the human caseworker does."
+
+**Change:**  
+- Added `CaseWorkflowState.referrals_approved = "REFERRALS_APPROVED"` to the domain enum (backward-compatible; `approved` preserved for legacy data).  
+- `case_workflow.py`: On `approved` decision, state transitions to `REFERRALS_APPROVED` instead of `APPROVED`.  
+- Audit trail message now reads: "Caseworker decision: Referrals approved for progression. Eligibility: Pending — unresolved conditions may remain."  
+- `CaseStatusBar.tsx`: Maps `REFERRALS_APPROVED` and legacy `APPROVED` → "Referrals Approved · Eligibility Pending" with **amber/warning tone** (not green).  
+- `HumanReviewView.tsx`: Decision buttons renamed to "Approve Referrals", "Modify Referrals", "Request Information", "Reject / Close Referrals". Post-decision display shows "Referrals Approved" badge with "Eligibility: Pending" sub-label.
+
+**Test updated:** `test_submit_human_review_approval` updated to assert `workflow_state == "REFERRALS_APPROVED"`.
+
+**Evaluation result:** 152/152 tests pass. TypeScript check passes.
+
+---
+
+### Change 2 — Trajectory Duplicate Events
+
+**Previous behavior:**  
+TrajectoryView rendered every `AgentEvent` as a top-level list item. The orchestrator records 2 events per stage (stage_start + stage_complete) for observability, causing visual duplicates like "NeedsAssessmentAgent / NeedsAssessmentAgent".
+
+**Root cause:**  
+NOT a bug — legitimate observability design. The backend correctly logs start and complete events per stage.
+
+**Change:**  
+`TrajectoryView.tsx`: Events are now grouped by `(stage, agent)`. Each logical stage renders as one card showing stage name and event count badge ("2 events"). Expanding the card reveals sub-event rows with type icons (▶ start, ✓ complete, ⚠ error), timestamps, and latency. Error events surface a red border at the group level regardless of grouping.
+
+**Data integrity:** No backend data removed. All events remain auditable.
+
+---
+
+### Change 3 — Missing Information Label Deduplication
+
+**Previous behavior:**  
+`FactsView.tsx` rendered `profile.missing_information` as a flat list of raw LLM-generated strings, which could include semantically overlapping items such as "housing status or rent information", "exact housing status", "rent details".
+
+**Change:**  
+Added pure `normalizeMissingInfo()` function in `FactsView.tsx`. Uses Jaccard similarity on non-stop-word tokens (threshold ≥ 60%) and substring inclusion to group overlapping labels. The shortest representative label per group is shown. Raw count is preserved in the heading ("X fields"). A "N overlapping labels grouped" note appears when deduplication occurs.
+
+**Data integrity:** Verification engine not touched. Deduplication is display-only.
+
+---
+
+### Change 4 — Grounded Rules Indicator (Interactive)
+
+**Previous behavior:**  
+"Grounded Rules Active" was a static, non-interactive `<div>`. Clicking it did nothing. This was misleading for a hackathon demo.
+
+**Change:**  
+`Header.tsx`: Converted to an accessible `<button>` with `aria-expanded` and `aria-haspopup="dialog"`. Clicking opens a popover panel containing:  
+- 5 safety property bullet points (deterministic evaluation, UNKNOWN preservation, missing-info handling, LLM scope limits, human review requirement)  
+- Provenance table (KB name, engine type, unknown handling, KB version v1.0, human review requirement)  
+- Disclaimer: "Grounded rules support caseworker decision-making; they do not replace official eligibility determination."
+
+Closes on Escape, outside click, or ✕ button. No claims of live/government-verified/real-time data.
+
+---
+
+**Lesson learned:** Correct semantics in status labels and button labels are as important as correct backend logic. "APPROVED" as a workflow state creates a misleading affordance even when the underlying verification correctly preserves UNKNOWN. UI terminology must reinforce — not undermine — the product's human-in-the-loop design.
+
 ## Required Entry Format
 
 ```markdown

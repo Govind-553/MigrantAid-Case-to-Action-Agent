@@ -8,6 +8,7 @@ import {
   Send,
   Sparkles,
   ShieldCheck,
+  Clock,
 } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { SectionHeader } from '@/components/ui/SectionHeader';
@@ -35,37 +36,54 @@ const DECISIONS: {
 }[] = [
   {
     id: 'approved',
-    label: 'Approve',
-    description: 'Endorse recommendations and begin referral steps',
+    label: 'Approve Referrals',
+    description:
+      'Approve suggested referrals for progression — eligibility conditions may remain pending',
     icon: <CheckCircle2 className="h-4 w-4" />,
     activeClass: 'border-emerald-500 bg-emerald-50 text-emerald-900 ring-2 ring-emerald-500/20',
     tone: 'text-emerald-600',
   },
   {
     id: 'modified',
-    label: 'Modify',
-    description: 'Approve with caseworker modifications',
+    label: 'Modify Referrals',
+    description: 'Approve with caseworker modifications to the suggested referrals',
     icon: <AlertTriangle className="h-4 w-4" />,
     activeClass: 'border-blue-500 bg-blue-50 text-blue-900 ring-2 ring-blue-500/20',
     tone: 'text-blue-600',
   },
   {
     id: 'request_information',
-    label: 'Request Info',
-    description: 'Hold referrals pending missing answers',
+    label: 'Request Information',
+    description: 'Hold referrals pending missing answers from beneficiary or other sources',
     icon: <FileQuestion className="h-4 w-4" />,
     activeClass: 'border-amber-500 bg-amber-50 text-amber-900 ring-2 ring-amber-500/20',
     tone: 'text-amber-600',
   },
   {
     id: 'rejected',
-    label: 'Reject / Close',
-    description: 'Reject suggested referrals as unsuitable',
+    label: 'Reject / Close Referrals',
+    description: 'Reject suggested referrals as unsuitable for this case',
     icon: <XCircle className="h-4 w-4" />,
     activeClass: 'border-rose-500 bg-rose-50 text-rose-900 ring-2 ring-rose-500/20',
     tone: 'text-rose-600',
   },
 ];
+
+/** Human-safe label for a recorded decision. */
+function decisionLabel(decision: Decision): string {
+  switch (decision) {
+    case 'approved':
+      return 'Referrals Approved';
+    case 'modified':
+      return 'Referrals Modified';
+    case 'request_information':
+      return 'Information Requested';
+    case 'rejected':
+      return 'Referrals Rejected / Closed';
+    default:
+      return decision.replace(/_/g, ' ');
+  }
+}
 
 export const HumanReviewView: React.FC<HumanReviewViewProps> = ({
   review,
@@ -94,39 +112,49 @@ export const HumanReviewView: React.FC<HumanReviewViewProps> = ({
         description="MigrantAid assists. You decide. Consequential decisions stay with the caseworker."
         after={
           isDecided && (
-            <Badge tone="success">
-              <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-              <span className="capitalize">Decision: {review?.decision.replace(/_/g, ' ')}</span>
-            </Badge>
+            <div className="flex flex-col items-end gap-1">
+              <Badge
+                tone={review?.decision === 'approved' ? 'warning' : 'neutral'}
+              >
+                <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>{decisionLabel(review!.decision)}</span>
+              </Badge>
+              {review?.decision === 'approved' && (
+                <span className="text-[10px] text-amber-700 font-medium">
+                  Eligibility: Pending
+                </span>
+              )}
+            </div>
           )
         }
       />
 
-      {/* AI vs Human banner */}
+      {/* AI vs Human clarity banner — always visible before decision */}
       {!isDecided && (
         <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="p-3.5 rounded-lg bg-brand-50 border border-brand-200">
             <div className="flex items-center gap-2 mb-1">
               <Sparkles className="h-4 w-4 text-brand-600" aria-hidden="true" />
               <span className="text-xs font-bold text-brand-800 uppercase tracking-wide">
-                AI recommendation
+                AI Recommendation
               </span>
             </div>
             <p className="text-xs text-brand-900">
-              Potentially eligible referrals, prepared with evidence and explicit uncertainty.
-              Requires human review.
+              Potentially eligible referrals prepared with evidence and explicit
+              uncertainty. Eligibility has not been determined — unknown information
+              remains unknown.
             </p>
           </div>
           <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
             <div className="flex items-center gap-2 mb-1">
               <ShieldCheck className="h-4 w-4 text-slate-600" aria-hidden="true" />
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">
-                Human decision
+                Human Decision
               </span>
             </div>
             <p className="text-xs text-slate-600">
-              You review the evidence and make the final decision. The system never decides
-              eligibility for you.
+              You review the evidence and decide whether referrals or actions should
+              proceed. The system never determines eligibility — you do.
             </p>
           </div>
         </div>
@@ -134,25 +162,36 @@ export const HumanReviewView: React.FC<HumanReviewViewProps> = ({
 
       {isDecided ? (
         <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
-            <span className="font-semibold text-slate-900 capitalize">
-              Decision recorded: {review?.decision.replace(/_/g, ' ')}
-            </span>
-            <span>
-              Reviewed:{' '}
+          {/* Decision recorded summary */}
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-slate-900">
+                {decisionLabel(review!.decision)}
+              </p>
+              {review?.decision === 'approved' && (
+                <p className="text-xs text-amber-700 mt-0.5 flex items-center gap-1">
+                  <AlertTriangle className="h-3 w-3 shrink-0" aria-hidden="true" />
+                  Referrals approved for progression. Eligibility conditions may
+                  still be unresolved.
+                </p>
+              )}
+            </div>
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
+              <Clock className="h-3 w-3" aria-hidden="true" />
               {review?.reviewed_at
                 ? new Date(review.reviewed_at).toLocaleString()
                 : 'N/A'}
-            </span>
+            </div>
           </div>
+
           {review?.modified_recommendation_ids?.length ? (
             <p className="text-xs text-slate-600">
-              Modified: {review.modified_recommendation_ids.join(', ')}
+              Modified referrals: {review.modified_recommendation_ids.join(', ')}
             </p>
           ) : null}
           {review?.rejected_recommendation_ids?.length ? (
             <p className="text-xs text-slate-600">
-              Rejected: {review.rejected_recommendation_ids.join(', ')}
+              Rejected referrals: {review.rejected_recommendation_ids.join(', ')}
             </p>
           ) : null}
           {review?.reviewer_notes && (

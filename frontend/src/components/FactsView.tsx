@@ -18,6 +18,85 @@ import { CaseFact, CaseProfile, FactStatus } from '@/types';
 import { mapFactStatus } from '@/lib/status';
 import { cn } from '@/lib/cn';
 
+/**
+ * Normalizes and deduplicates a list of missing-information labels for display.
+ *
+ * WHY: The intake agent (LLM) can produce overlapping labels such as:
+ *   "housing status or rent information", "exact housing status", "rent details"
+ * These represent the same underlying gap and clutter the UI.
+ *
+ * HOW: Labels are tokenized and significant tokens (non-stop-words) are
+ * compared.  Items sharing ≥60% of significant tokens are grouped; the
+ * shortest label in the group is kept as the representative.
+ *
+ * IMPORTANT: This is purely a display-layer transformation.
+ * The underlying verification engine evaluates each requirement independently —
+ * this function only changes what the caseworker sees in the high-level summary.
+ */
+const STOP_WORDS = new Set([
+  'or', 'and', 'the', 'a', 'an', 'of', 'for', 'to', 'in', 'on',
+  'at', 'with', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+  'exact', 'current', 'specific', 'information', 'details', 'detail',
+  'status', 'any',
+]);
+
+function tokenize(label: string): Set<string> {
+  return new Set(
+    label
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter((t) => t.length > 1 && !STOP_WORDS.has(t))
+  );
+}
+
+function jaccard(a: Set<string>, b: Set<string>): number {
+  if (a.size === 0 && b.size === 0) return 1;
+  let intersection = 0;
+  Array.from(a).forEach((t) => {
+    if (b.has(t)) intersection++;
+  });
+  const union = a.size + b.size - intersection;
+  return union === 0 ? 0 : intersection / union;
+}
+
+export function normalizeMissingInfo(items: string[]): string[] {
+  if (items.length === 0) return [];
+
+  const tokenized = items.map((item) => ({ label: item, tokens: tokenize(item) }));
+  const grouped: boolean[] = new Array(items.length).fill(false);
+  const representatives: string[] = [];
+
+  for (let i = 0; i < tokenized.length; i++) {
+    if (grouped[i]) continue;
+    const cluster = [i];
+    for (let j = i + 1; j < tokenized.length; j++) {
+      if (grouped[j]) continue;
+      // If tokens are highly similar OR one label is a substring of the other
+      const sim = jaccard(tokenized[i].tokens, tokenized[j].tokens);
+      const aInB = tokenized[i].label.toLowerCase().includes(
+        tokenized[j].label.toLowerCase().replace(/[^a-z\s]/g, '').trim()
+      );
+      const bInA = tokenized[j].label.toLowerCase().includes(
+        tokenized[i].label.toLowerCase().replace(/[^a-z\s]/g, '').trim()
+      );
+      if (sim >= 0.6 || aInB || bInA) {
+        cluster.push(j);
+        grouped[j] = true;
+      }
+    }
+    grouped[i] = true;
+    // Keep shortest label as the representative for cleaner display
+    const rep = cluster
+      .map((k) => tokenized[k].label)
+      .sort((a, b) => a.length - b.length)[0];
+    representatives.push(rep);
+  }
+
+  return representatives;
+}
+
+
 interface FactsViewProps {
   profile: CaseProfile;
   onUpdateFacts: (facts: CaseFact[]) => Promise<void>;
@@ -139,28 +218,42 @@ export const FactsView: React.FC<FactsViewProps> = ({
       )}
 
       {/* Missing information alert */}
-      {profile.missing_information && profile.missing_information.length > 0 && (
-        <div className="mb-4 p-4 bg-warning.bg border border-warning.border rounded-lg">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="h-4 w-4 text-warning shrink-0 mt-0.5" aria-hidden="true" />
-            <div className="min-w-0">
-              <span className="text-xs font-semibold text-warning.text">
-                Critical missing information
-              </span>
-              <div className="flex flex-wrap gap-1.5 mt-1.5">
-                {profile.missing_information.map((m, i) => (
-                  <span
-                    key={i}
-                    className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-white text-warning.text border border-warning.border"
-                  >
-                    {m.replace(/_/g, ' ')}
+      {profile.missing_information && profile.missing_information.length > 0 && (() => {
+        const normalized = normalizeMissingInfo(profile.missing_information);
+        const collapsed = normalized.length < profile.missing_information.length;
+        return (
+          <div className="mb-4 p-4 bg-warning.bg border border-warning.border rounded-lg">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-4 w-4 text-warning shrink-0 mt-0.5" aria-hidden="true" />
+              <div className="min-w-0 w-full">
+                <div className="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+                  <span className="text-xs font-semibold text-warning.text">
+                    Information needed ({profile.missing_information.length} field
+                    {profile.missing_information.length !== 1 ? 's' : ''})
                   </span>
-                ))}
+                  {collapsed && (
+                    <span className="text-[10px] text-warning.text opacity-70">
+                      {profile.missing_information.length - normalized.length} overlapping label
+                      {profile.missing_information.length - normalized.length !== 1 ? 's' : ''} grouped
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {normalized.map((m, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-white text-warning.text border border-warning.border"
+                    >
+                      {m.replace(/_/g, ' ')}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
+
 
       {/* Facts */}
       {!isEditing ? (

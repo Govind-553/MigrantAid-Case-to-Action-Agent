@@ -81,10 +81,12 @@ class TestCaseEndpoints:
         assert response.status_code == 200
         data = response.json()
 
-        assert data["workflow_state"] == "APPROVED"
+        # When a caseworker approves referrals, the workflow state must use
+        assert data["workflow_state"] == "REFERRALS_APPROVED"
         assert data["human_review"]["decision"] == "approved"
         assert data["human_review"]["reviewed_at"] is not None
         assert data["human_review"]["reviewer_notes"] == "All documents verified by frontline supervisor."
+
 
 
 class TestResourceEndpoints:

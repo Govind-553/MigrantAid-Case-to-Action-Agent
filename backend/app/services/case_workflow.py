@@ -176,8 +176,11 @@ class CaseWorkflowService:
         state.updated_at = now
 
         # Transition workflow state based on decision
+        # IMPORTANT: 'approved' decision means the caseworker approved REFERRALS for
+        # progression — it does NOT mean the beneficiary has been determined eligible.
+        # Eligibility conditions may still be unresolved (UNKNOWN).
         if decision == HumanReviewDecision.approved:
-            state.workflow_state = CaseWorkflowState.approved
+            state.workflow_state = CaseWorkflowState.referrals_approved
         elif decision == HumanReviewDecision.modified:
             state.workflow_state = CaseWorkflowState.modified
         elif decision == HumanReviewDecision.request_information:
@@ -191,7 +194,14 @@ class CaseWorkflowService:
                 stage="human_review",
                 agent="Caseworker",
                 event_type=AgentEventType.human_checkpoint,
-                output_summary=f"Caseworker review completed: decision={decision.value}. Notes: {reviewer_notes or 'None'}",
+                output_summary=(
+                    f"Caseworker decision: Referrals approved for progression. "
+                    f"Eligibility: Pending — unresolved conditions may remain. "
+                    f"Notes: {reviewer_notes or 'None'}"
+                ) if decision == HumanReviewDecision.approved else (
+                    f"Caseworker review completed: decision={decision.value}. "
+                    f"Notes: {reviewer_notes or 'None'}"
+                ),
             )
         )
 

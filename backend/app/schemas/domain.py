@@ -121,7 +121,11 @@ class CaseWorkflowState(str, Enum):
     action_plan_ready = "ACTION_PLAN_READY"
     quality_check = "QUALITY_CHECK"
     human_review = "HUMAN_REVIEW"
+    # NOTE: 'approved' is preserved for backward compatibility (evaluation data).
+    # New code should use 'referrals_approved' which accurately communicates
+    # that caseworker approved referral progression — NOT that eligibility is confirmed.
     approved = "APPROVED"
+    referrals_approved = "REFERRALS_APPROVED"
     modified = "MODIFIED"
     more_information_required = "MORE_INFORMATION_REQUIRED"
     completed = "COMPLETED"

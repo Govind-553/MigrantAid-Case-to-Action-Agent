@@ -127,6 +127,7 @@ export interface AgentEvent {
   output_summary?: string | null;
   latency_ms?: number | null;
   retry_count: number;
+  error_message?: string | null;
 }
 
 export interface CaseState {
