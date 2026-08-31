@@ -398,3 +398,39 @@ KEEP â€” Complete resolution of all three runtime issues with verified end-to-en
 
 
 
+
+---
+
+## Iteration 4 — Dark Mode, Responsive Nav Fix & Design-System Polish (2026-08-31)
+
+**Scope:** Frontend UI/UX only. No backend, DB, API, agents, or business logic changed.
+
+### Responsive Navigation Fix
+- Made `Grounded Rules Active` fully visible AND interactive in the mobile menu (previously a non-interactive label). It now opens the same evidence popover via an accordion in the mobile dropdown.
+- Desktop Grounded Rules pill moved from `xl` to `lg` breakpoint and given `max-w-[calc(100vw-2rem)]` so it never overflows the viewport.
+- Header now wraps its light logo lockup/footer/hero and all controls in overflow-safe flex with truncation; added dedicated mobile theme toggle + hamburger cluster.
+- Whole header is now responsive and readable at 320/375/390/430/768 and desktop widths with no horizontal overflow.
+
+### Dark Mode
+- Enabled Tailwind `darkMode: 'class'` in `tailwind.config.js`.
+- Added `src/lib/useTheme.ts` (Light/Dark toggle): respects system `prefers-color-scheme` until the user explicitly chooses, persists choice to `localStorage` (`migrantaid-theme`).
+- Added a no-flash init script in `pages/_document.tsx` that applies the `dark` class before first paint.
+- Added Sun/Moon theme toggle button to the header (desktop + mobile), smooth transitions, `color-scheme` set for scrollbars/inputs.
+- Converted every shared component (Card, Button, Badge, StatusBadge, RequirementBadge, SectionHeader, EmptyState, ErrorState, LoadingState, Field, WorkflowNav, CaseStatusBar) and every view (Intake, Facts, Needs, Recommendations, ActionPlan, HumanReview, Trajectory, Benchmark, index) to dark-mode-aware styles: backgrounds, cards, nav, buttons, text, borders, badges/status, forms/inputs, tables, workflow timeline, alerts, icons.
+- Preserved the accurate brand blue/indigo identity and the `UNKNOWN != SATISFIED` semantics.
+
+### Design-System Polish (micro1-inspired philosophy)
+- Kept MigrantAid's blue identity; refined shadows (`shadow-card-lg`, `shadow-ring`) and consistent radii.
+- Restricted palette, generous whitespace, subtle borders/shadows, refined hover/focus states maintained.
+
+### Validation
+- `npx tsc --noEmit` clean; `npm run lint` no warnings/errors; `next build` compiled successfully.
+- Tested Light and Dark themes, theme persistence (localStorage) and system-preference fallback; desktop and mobile layouts.
+
+
+### Iteration 4 follow-up fixes
+- Brand image: wired `public/icon.png` as the browser-tab favicon + apple-touch-icon, and set it as the header brand logo (replacing the ShieldCheck square) via `next/image`.
+- Updated page meta description to: `MigrantAid — Case-to-action assistant for supporting migrant workers` (document + index).
+- Fixed `Grounded Rules Active` pill not visible at 768px tablet: changed its breakpoint from `lg` to `md` and freed header space at tablet widths by moving the `Case-to-Action` badge to `lg` and the tagline to `xl`.
+- Validation: tsc clean, lint no warnings, `next build` ok.
+

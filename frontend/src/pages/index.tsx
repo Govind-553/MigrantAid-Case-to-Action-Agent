@@ -142,26 +142,26 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Head>
-        <title>MigrantAid — Case-to-Action Assistant</title>
+      <div className="min-h-screen flex flex-col">
+        <Head>
+          <title>MigrantAid — Case-to-action assistant for supporting migrant workers</title>
         <meta
           name="description"
-          content="MigrantAid — turn messy community cases into evidence-backed, human-reviewed action plans."
+          content="MigrantAid — Case-to-action assistant for supporting migrant workers."
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
 
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
 
-      <Header currentTab={activeTab} onTabChange={setActiveTab} />
+        <Header currentTab={activeTab} onTabChange={setActiveTab} />
 
-      <main
-        id="main-content"
-        className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
-      >
+        <main
+          id="main-content"
+          className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
+        >
         {error && (
           <div className="mb-6" role="alert">
             <ErrorState
@@ -179,14 +179,14 @@ export default function Home() {
             {/* Hero — shown on first screen before a case exists */}
             {!currentCase && (
               <div className="text-center max-w-2xl mx-auto px-2">
-                <span className="inline-flex items-center gap-2 text-xs font-semibold text-brand-700 bg-brand-50 border border-brand-200 rounded-full px-3 py-1">
+                <span className="inline-flex items-center gap-2 text-xs font-semibold text-brand-700 dark:text-brand-300 bg-brand-50 dark:bg-brand-950/60 border border-brand-200 dark:border-brand-800 rounded-full px-3 py-1">
                   <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
                   AI assists. Human decides.
                 </span>
-                <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+                <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
                   Turn messy community cases into evidence-backed, human-reviewed action plans.
                 </h1>
-                <p className="mt-3 text-slate-500 text-sm sm:text-base">
+                <p className="mt-3 text-slate-500 dark:text-slate-400 text-sm sm:text-base">
                   MigrantAid helps frontline workers turn an incomplete description into
                   structured facts, prioritized needs, verified resource matches, and a clear
                   action plan — with the human always in control.
@@ -205,7 +205,7 @@ export default function Home() {
                 {/* Workflow navigation sidebar / mobile strip */}
                 <aside className="lg:pb-0">
                   <div className="lg:sticky lg:top-20">
-                    <p className="hidden lg:block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+                    <p className="hidden lg:block text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
                       Case workflow
                     </p>
                     <WorkflowNav
@@ -223,7 +223,7 @@ export default function Home() {
                   <div key={activeStage} className="animate-fade-in">
                     {renderStage() ?? (
                       <Card>
-                        <p className="text-sm text-slate-500 text-center py-8">
+                        <p className="text-sm text-slate-500 dark:text-slate-400 text-center py-8">
                           This part of the case has not been generated yet. Use{' '}
                           <strong>Continue to next step</strong> or select another stage.
                         </p>
@@ -247,9 +247,9 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 mt-12 text-center text-xs text-slate-500 dark:text-slate-400">
         <p>MigrantAid — Evidence-Backed Case-to-Action Casework Assistant</p>
-        <p className="mt-1 text-[11px] text-slate-400">
+        <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
           Strict Evidence Traceability · Human-in-the-Loop Governance · Deterministic Evaluation
           Rubric
         </p>

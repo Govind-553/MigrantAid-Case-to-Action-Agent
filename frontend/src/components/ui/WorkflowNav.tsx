@@ -67,10 +67,10 @@ export const WorkflowNav: React.FC<WorkflowNavProps> = ({
                     isActive
                       ? 'bg-brand-600 text-white border-brand-600 shadow-card'
                       : unlocked && isReached
-                      ? 'bg-white text-brand-700 border-slate-200 hover:bg-brand-50'
+                      ? 'bg-white dark:bg-slate-800 text-brand-700 dark:text-brand-300 border-slate-200 dark:border-slate-700 hover:bg-brand-50 dark:hover:bg-brand-950/40'
                       : unlocked
-                      ? 'bg-white text-slate-600 border-slate-200 hover:bg-brand-50'
-                      : 'bg-slate-50 text-slate-400 border-slate-200 cursor-not-allowed'
+                      ? 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-brand-50 dark:hover:bg-brand-950/40'
+                      : 'bg-slate-50 dark:bg-slate-800/40 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-800 cursor-not-allowed'
                   )}
                 >
                   <span aria-hidden="true">{STAGE_ICONS[stage.id]}</span>
@@ -98,27 +98,27 @@ export const WorkflowNav: React.FC<WorkflowNavProps> = ({
                 onClick={() => !isLocked && onSelect(stage.id)}
                 disabled={isLocked}
                 aria-current={isActive ? 'page' : undefined}
-                className={cn(
-                  'w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
-                  isActive
-                    ? 'bg-brand-50 text-brand-800 ring-1 ring-brand-200'
-                    : isLocked
-                    ? 'text-slate-400 cursor-not-allowed'
-                    : 'text-slate-600 hover:bg-slate-50'
-                )}
-              >
-                <span
                   className={cn(
-                    'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border',
+                    'w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
                     isActive
-                      ? 'bg-brand-600 text-white border-brand-600'
-                      : isDone
-                      ? 'bg-emerald-50 text-emerald-600 border-emerald-300'
+                      ? 'bg-brand-50 dark:bg-brand-950/60 text-brand-800 dark:text-brand-200 ring-1 ring-brand-200 dark:ring-brand-800'
                       : isLocked
-                      ? 'bg-slate-50 text-slate-300 border-slate-200'
-                      : 'bg-white text-slate-400 border-slate-300'
+                      ? 'text-slate-400 dark:text-slate-500 cursor-not-allowed'
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                   )}
                 >
+                  <span
+                    className={cn(
+                      'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border',
+                      isActive
+                        ? 'bg-brand-600 text-white border-brand-600'
+                        : isDone
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700'
+                        : isLocked
+                        ? 'bg-slate-50 dark:bg-slate-800 text-slate-300 dark:text-slate-600 border-slate-200 dark:border-slate-700'
+                        : 'bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-400 border-slate-300 dark:border-slate-600'
+                    )}
+                  >
                   {isDone ? (
                     <Check className="h-3.5 w-3.5" aria-hidden="true" />
                   ) : (

@@ -196,16 +196,16 @@ export const FactsView: React.FC<FactsViewProps> = ({
               <h4 className="text-xs font-bold text-danger.text uppercase tracking-wider">
                 Contradiction detected ({profile.contradictions.length})
               </h4>
-              <p className="text-xs text-slate-600 mt-0.5">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                 Conflicting statements. Human clarification is required before proceeding.
               </p>
               <ul className="mt-2 space-y-1">
                 {profile.contradictions.map((c, i) => (
-                  <li key={i} className="text-xs text-danger.text flex items-start gap-1.5">
+                  <li key={i} className="text-xs text-danger.text dark:text-red-300 flex items-start gap-1.5">
                     <span aria-hidden="true">•</span>
                     <span>
                       <strong>{c.description}</strong>{' '}
-                      <span className="text-slate-500">
+                      <span className="text-slate-500 dark:text-slate-400">
                         ({c.fact_a.replace(/_/g, ' ')} vs {c.fact_b.replace(/_/g, ' ')})
                       </span>
                     </span>
@@ -242,7 +242,7 @@ export const FactsView: React.FC<FactsViewProps> = ({
                   {normalized.map((m, i) => (
                     <span
                       key={i}
-                      className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-white text-warning.text border border-warning.border"
+                      className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-white dark:bg-slate-900 text-warning.text dark:text-amber-300 border border-warning.border dark:border-amber-800"
                     >
                       {m.replace(/_/g, ' ')}
                     </span>
@@ -273,14 +273,14 @@ export const FactsView: React.FC<FactsViewProps> = ({
                   className={cn(
                     'p-3 rounded-lg border transition-colors',
                     fact.status === 'unknown'
-                      ? 'border-warning.border bg-warning.bg/40'
+                      ? 'border-warning.border dark:border-amber-800 bg-warning.bg/40 dark:bg-amber-950/30'
                       : fact.status === 'conflicting'
-                      ? 'border-danger.border bg-danger.bg/40'
-                      : 'border-slate-100 bg-slate-50/60'
+                      ? 'border-danger.border dark:border-red-800 bg-danger.bg/40 dark:bg-red-950/30'
+                      : 'border-slate-100 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/60'
                   )}
                 >
                   <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
                       {fact.field.replace(/_/g, ' ')}
                     </span>
                     <StatusBadge tone={status.tone} icon={status.icon} title={status.title} className="shrink-0">
@@ -291,10 +291,10 @@ export const FactsView: React.FC<FactsViewProps> = ({
                     className={cn(
                       'text-sm font-medium break-words',
                       fact.status === 'unknown'
-                        ? 'text-warning.text'
+                        ? 'text-warning.text dark:text-amber-300'
                         : fact.status === 'conflicting'
-                        ? 'text-danger.text'
-                        : 'text-slate-900'
+                        ? 'text-danger.text dark:text-red-300'
+                        : 'text-slate-900 dark:text-slate-100'
                     )}
                   >
                     {typeof fact.value === 'boolean'
@@ -304,7 +304,7 @@ export const FactsView: React.FC<FactsViewProps> = ({
                       : String(fact.value ?? 'None')}
                   </div>
                   {fact.source && (
-                    <div className="mt-2 text-[10px] text-slate-400 truncate">
+                    <div className="mt-2 text-[10px] text-slate-400 dark:text-slate-500 truncate">
                       Source: {fact.source.replace(/_/g, ' ')}
                     </div>
                   )}
@@ -318,7 +318,7 @@ export const FactsView: React.FC<FactsViewProps> = ({
           {facts.map((f, idx) => (
             <div
               key={idx}
-              className="flex flex-col sm:flex-row sm:items-center gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200"
+              className="flex flex-col sm:flex-row sm:items-center gap-2 bg-slate-50 dark:bg-slate-800/60 p-3 rounded-lg border border-slate-200 dark:border-slate-700"
             >
               <div className="flex flex-1 flex-col sm:flex-row gap-2">
                 <input
@@ -327,7 +327,7 @@ export const FactsView: React.FC<FactsViewProps> = ({
                   onChange={(e) => handleFactChange(idx, 'field', e.target.value)}
                   placeholder="Field name"
                   aria-label="Fact field name"
-                  className="flex-1 px-2.5 py-1.5 text-xs border border-slate-300 rounded bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                  className="flex-1 px-2.5 py-1.5 text-xs border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                 />
                 <input
                   type="text"
@@ -340,13 +340,13 @@ export const FactsView: React.FC<FactsViewProps> = ({
                   }}
                   placeholder="Value"
                   aria-label="Fact value"
-                  className="flex-1 px-2.5 py-1.5 text-xs border border-slate-300 rounded bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                  className="flex-1 px-2.5 py-1.5 text-xs border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                 />
                 <select
                   value={f.status}
                   onChange={(e) => handleFactChange(idx, 'status', e.target.value as FactStatus)}
                   aria-label="Fact status"
-                  className="flex-1 sm:flex-none px-2.5 py-1.5 text-xs border border-slate-300 rounded bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                  className="flex-1 sm:flex-none px-2.5 py-1.5 text-xs border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
                 >
                   <option value="explicit">Explicit</option>
                   <option value="inferred">Inferred</option>
@@ -358,7 +358,7 @@ export const FactsView: React.FC<FactsViewProps> = ({
                 type="button"
                 onClick={() => handleRemoveFact(idx)}
                 aria-label={`Remove fact ${f.field || 'untitled'}`}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-400 hover:text-danger hover:bg-danger.bg shrink-0"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-400 dark:text-slate-500 hover:text-danger dark:hover:text-red-400 hover:bg-danger.bg dark:hover:bg-red-950/40 shrink-0"
               >
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
               </button>

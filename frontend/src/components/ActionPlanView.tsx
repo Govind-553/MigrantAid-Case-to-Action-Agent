@@ -45,14 +45,14 @@ export const ActionPlanView: React.FC<ActionPlanViewProps> = ({ actionPlan }) =>
                 {/* Connector line */}
                 {act.step !== actionPlan.actions.length && (
                   <span
-                    className="absolute left-[15px] top-8 bottom-0 w-px bg-slate-200"
+                    className="absolute left-[15px] top-8 bottom-0 w-px bg-slate-200 dark:bg-slate-700"
                     aria-hidden="true"
                   />
                 )}
 
                 {/* Step number */}
                 <div className="shrink-0">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-white text-sm font-bold shadow-card ring-4 ring-brand-50">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-white text-sm font-bold shadow-card ring-4 ring-brand-50 dark:ring-brand-950/60">
                     {act.step}
                   </span>
                 </div>
@@ -60,7 +60,7 @@ export const ActionPlanView: React.FC<ActionPlanViewProps> = ({ actionPlan }) =>
                 {/* Step content */}
                 <div className="min-w-0 flex-1 pt-0.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-sm font-semibold text-slate-900 break-words">
+                    <span className="text-sm font-semibold text-slate-900 dark:text-white break-words">
                       {act.action}
                     </span>
                     <StatusBadge tone={meta.tone} className="shrink-0">
@@ -68,11 +68,11 @@ export const ActionPlanView: React.FC<ActionPlanViewProps> = ({ actionPlan }) =>
                     </StatusBadge>
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-relaxed mt-1">{act.reason}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mt-1">{act.reason}</p>
 
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-2 text-[11px] text-slate-500">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-2 text-[11px] text-slate-500 dark:text-slate-400">
                     <div className="flex items-center gap-1">
-                      <UserCheck className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
+                      <UserCheck className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" aria-hidden="true" />
                       <span className="capitalize">
                         {act.responsible_role.replace(/_/g, ' ')}
                       </span>
@@ -80,7 +80,7 @@ export const ActionPlanView: React.FC<ActionPlanViewProps> = ({ actionPlan }) =>
 
                     {act.prerequisite && (
                       <div className="flex items-center gap-1">
-                        <ArrowRight className="h-3 w-3 text-slate-400" aria-hidden="true" />
+                        <ArrowRight className="h-3 w-3 text-slate-400 dark:text-slate-500" aria-hidden="true" />
                         <span>Before: {act.prerequisite}</span>
                       </div>
                     )}
@@ -93,7 +93,7 @@ export const ActionPlanView: React.FC<ActionPlanViewProps> = ({ actionPlan }) =>
                   </div>
 
                   {act.unresolved_uncertainty && (
-                    <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-warning.bg border border-warning.border text-[11px] text-warning.text">
+                    <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-warning.bg dark:bg-amber-950/40 border border-warning.border dark:border-amber-800 text-[11px] text-warning.text dark:text-amber-300">
                       <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
                       <span>{act.unresolved_uncertainty}</span>
                     </div>

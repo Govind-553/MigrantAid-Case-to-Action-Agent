@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -69,6 +70,8 @@ module.exports = {
       },
       boxShadow: {
         card: "0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06)",
+        'card-lg': "0 1px 3px 0 rgb(15 23 42 / 0.05), 0 8px 24px -6px rgb(15 23 42 / 0.08)",
+        ring: "0 0 0 1px rgb(15 23 42 / 0.05)",
       },
       keyframes: {
         "fade-in": {

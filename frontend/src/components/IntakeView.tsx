@@ -73,10 +73,10 @@ export const IntakeView: React.FC<IntakeViewProps> = ({ onSubmit, isLoading }) =
   return (
     <Card>
       <div className="mb-5">
-        <h2 className="text-xl font-semibold text-slate-900 leading-snug">
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-white leading-snug">
           Describe the person&apos;s situation
         </h2>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
           Write the case in your own words — it doesn&apos;t need to be structured.
           MigrantAid will turn it into an evidence-backed, human-reviewed action plan.
         </p>
@@ -85,8 +85,8 @@ export const IntakeView: React.FC<IntakeViewProps> = ({ onSubmit, isLoading }) =
       {/* Pre-loaded evaluation cases */}
       <div className="mb-5">
         <div className="flex items-center gap-2 mb-2">
-          <Info className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
-          <span className="text-xs font-semibold text-slate-600">
+          <Info className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" aria-hidden="true" />
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
             Load a pre-configured evaluation case to start quickly
           </span>
         </div>
@@ -100,19 +100,19 @@ export const IntakeView: React.FC<IntakeViewProps> = ({ onSubmit, isLoading }) =
               className={cn(
                 'text-left p-2.5 rounded-lg border text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500',
                 selectedCaseId === s.id
-                  ? 'border-brand-300 bg-brand-50 ring-1 ring-brand-300 text-brand-900'
-                  : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100 text-slate-700'
+                  ? 'border-brand-300 dark:border-brand-600 bg-brand-50 dark:bg-brand-950/50 ring-1 ring-brand-300 dark:ring-brand-700 text-brand-900 dark:text-brand-200'
+                  : 'border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
               )}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="font-mono text-[11px] font-bold text-slate-900">
+                <span className="font-mono text-[11px] font-bold text-slate-900 dark:text-slate-100">
                   {s.id}
                 </span>
-                <span className="text-[10px] bg-white text-slate-500 px-1.5 py-0.5 rounded border border-slate-200 whitespace-nowrap">
+                <span className="text-[10px] bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 whitespace-nowrap">
                   {s.category}
                 </span>
               </div>
-              <p className="mt-1 line-clamp-2 text-slate-600">{s.title}</p>
+              <p className="mt-1 line-clamp-2 text-slate-600 dark:text-slate-400">{s.title}</p>
             </button>
           ))}
         </div>
@@ -148,8 +148,8 @@ export const IntakeView: React.FC<IntakeViewProps> = ({ onSubmit, isLoading }) =
         </Field>
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4">
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            <Sparkles className="h-4 w-4 text-brand-600" aria-hidden="true" />
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <Sparkles className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />
             <span className="hidden sm:inline">
               6-stage pipeline: Intake → Needs → Matching → Verification → Action &rarr; Quality
             </span>

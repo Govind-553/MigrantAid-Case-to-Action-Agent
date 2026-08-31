@@ -12,11 +12,16 @@ interface StatusBadgeProps {
 }
 
 const tones: Record<StatusTone, string> = {
-  neutral: 'bg-slate-100 text-slate-700 border-slate-300',
-  success: 'bg-success.bg text-success.text border-success.border',
-  warning: 'bg-warning.bg text-warning.text border-warning.border',
-  danger: 'bg-danger.bg text-danger.text border-danger.border',
-  info: 'bg-blue-50 text-blue-700 border-blue-200',
+  neutral:
+    'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-600',
+  success:
+    'bg-success.bg dark:bg-emerald-950/60 text-success.text dark:text-emerald-300 border-success.border dark:border-emerald-800',
+  warning:
+    'bg-warning.bg dark:bg-amber-950/50 text-warning.text dark:text-amber-300 border-warning.border dark:border-amber-800',
+  danger:
+    'bg-danger.bg dark:bg-red-950/50 text-danger.text dark:text-red-300 border-danger.border dark:border-red-800',
+  info:
+    'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800',
 };
 
 /**

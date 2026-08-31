@@ -127,7 +127,7 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
               <li key={group.key} className="relative">
                 {!isLast && (
                   <span
-                    className="absolute left-3.5 top-9 bottom-[-8px] w-px bg-slate-200"
+                    className="absolute left-3.5 top-9 bottom-[-8px] w-px bg-slate-200 dark:bg-slate-700"
                     aria-hidden="true"
                   />
                 )}
@@ -136,10 +136,10 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
                   className={cn(
                     'rounded-xl border transition-colors',
                     group.hasError
-                      ? 'border-rose-300 bg-rose-50/60'
+                      ? 'border-rose-300 dark:border-rose-800 bg-rose-50/60 dark:bg-rose-950/30'
                       : isOpen
-                      ? 'border-brand-200 bg-white'
-                      : 'border-slate-200 bg-slate-50/60'
+                      ? 'border-brand-200 dark:border-brand-800 bg-white dark:bg-slate-900'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40'
                   )}
                 >
                   <button
@@ -151,14 +151,14 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
                     {/* Stage indicator dot */}
                     <span
                       className={cn(
-                        'relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full border ring-4 ring-white',
+                        'relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full border ring-4 ring-white dark:ring-slate-900',
                         group.hasError
                           ? 'bg-rose-500 text-white border-rose-500'
                           : isOpen
                           ? 'bg-brand-600 text-white border-brand-600'
                           : isCaseworker
-                          ? 'bg-violet-50 text-violet-600 border-violet-300'
-                          : 'bg-white text-slate-500 border-slate-300'
+                          ? 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border-violet-300 dark:border-violet-700'
+                          : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-300 dark:border-slate-600'
                       )}
                     >
                       {group.hasError ? (
@@ -174,24 +174,24 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
 
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="text-sm font-semibold text-slate-900">
+                        <span className="text-sm font-semibold text-slate-900 dark:text-white">
                           {formatStageName(group.stage)}
                         </span>
-                        <span className="text-[10px] text-slate-500 font-mono">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                           {group.agent}
                         </span>
                         {group.hasError && (
-                          <span className="text-[10px] bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded font-semibold">
+                          <span className="text-[10px] bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 px-1.5 py-0.5 rounded font-semibold">
                             Error
                           </span>
                         )}
                         {group.events.length > 1 && (
-                          <span className="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">
+                          <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded">
                             {group.events.length} events
                           </span>
                         )}
                         {group.events.some((e) => e.retry_count > 0) && (
-                          <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-semibold">
+                          <span className="text-[10px] bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 px-1.5 py-0.5 rounded font-semibold">
                             {Math.max(...group.events.map((e) => e.retry_count))} retr
                             {Math.max(...group.events.map((e) => e.retry_count)) > 1
                               ? 'ies'
@@ -199,7 +199,7 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-3 mt-0.5 text-[11px] text-slate-400">
+                      <div className="flex items-center gap-3 mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">
                         {group.events[0]?.timestamp && (
                           <span>
                             {new Date(group.events[0].timestamp).toLocaleTimeString([], {
@@ -232,24 +232,24 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
                       {group.events.map((event, eIdx) => (
                         <div
                           key={eIdx}
-                          className="rounded-lg border border-slate-200 bg-slate-50 overflow-hidden"
+                          className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 overflow-hidden"
                         >
                           {/* Sub-event header */}
-                          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 border-b border-slate-200">
+                          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
                             {event.event_type === 'stage_start' ? (
-                              <PlayCircle className="h-3 w-3 text-slate-500 shrink-0" aria-hidden="true" />
+                              <PlayCircle className="h-3 w-3 text-slate-500 dark:text-slate-400 shrink-0" aria-hidden="true" />
                             ) : event.event_type === 'stage_complete' ? (
                               <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" aria-hidden="true" />
                             ) : event.event_type === 'error' ? (
                               <AlertTriangle className="h-3 w-3 text-rose-500 shrink-0" aria-hidden="true" />
                             ) : (
-                              <Activity className="h-3 w-3 text-slate-500 shrink-0" aria-hidden="true" />
+                              <Activity className="h-3 w-3 text-slate-500 dark:text-slate-400 shrink-0" aria-hidden="true" />
                             )}
-                            <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wide">
+                            <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wide">
                               {formatEventType(event.event_type)}
                             </span>
                             {event.timestamp && (
-                              <span className="text-[10px] text-slate-400 ml-auto">
+                              <span className="text-[10px] text-slate-400 dark:text-slate-500 ml-auto">
                                 {new Date(event.timestamp).toLocaleTimeString([], {
                                   hour: '2-digit',
                                   minute: '2-digit',
@@ -258,7 +258,7 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
                               </span>
                             )}
                             {event.latency_ms != null && (
-                              <span className="text-[10px] text-slate-400">
+                              <span className="text-[10px] text-slate-400 dark:text-slate-500">
                                 {event.latency_ms.toFixed(0)}ms
                               </span>
                             )}
@@ -268,32 +268,32 @@ export const TrajectoryView: React.FC<TrajectoryViewProps> = ({ trajectory }) =>
                           <div className="p-2.5 space-y-1.5 text-xs">
                             {event.input_summary && (
                               <div>
-                                <span className="font-semibold text-slate-600 block mb-0.5">
+                                <span className="font-semibold text-slate-600 dark:text-slate-300 block mb-0.5">
                                   Input
                                 </span>
-                                <p className="text-slate-500">{event.input_summary}</p>
+                                <p className="text-slate-500 dark:text-slate-400">{event.input_summary}</p>
                               </div>
                             )}
                             {event.output_summary && (
                               <div>
-                                <span className="font-semibold text-slate-700 block mb-0.5">
+                                <span className="font-semibold text-slate-700 dark:text-slate-200 block mb-0.5">
                                   Output
                                 </span>
-                                <p className="text-slate-800">{event.output_summary}</p>
+                                <p className="text-slate-800 dark:text-slate-300">{event.output_summary}</p>
                               </div>
                             )}
                             {event.error_message && (
                               <div>
-                                <span className="font-semibold text-rose-700 block mb-0.5">
+                                <span className="font-semibold text-rose-700 dark:text-rose-400 block mb-0.5">
                                   Error
                                 </span>
-                                <p className="text-rose-600">{event.error_message}</p>
+                                <p className="text-rose-600 dark:text-rose-400">{event.error_message}</p>
                               </div>
                             )}
                             {!event.input_summary &&
                               !event.output_summary &&
                               !event.error_message && (
-                                <p className="text-slate-400">
+                                <p className="text-slate-400 dark:text-slate-500">
                                   No additional detail recorded for this event.
                                 </p>
                               )}

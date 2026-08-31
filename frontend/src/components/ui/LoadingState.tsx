@@ -28,16 +28,16 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
       role="status"
       aria-live="polite"
       className={cn(
-        'bg-white border border-slate-200 rounded-xl p-8 sm:p-10 flex flex-col items-center text-center',
+        'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8 sm:p-10 flex flex-col items-center text-center',
         className
       )}
     >
       <div className="relative">
-        <div className="h-9 w-9 rounded-full border-2 border-slate-200 border-t-brand-600 animate-spin" aria-hidden="true" />
+        <div className="h-9 w-9 rounded-full border-2 border-slate-200 dark:border-slate-700 border-t-brand-600 animate-spin" aria-hidden="true" />
       </div>
-      <p className="mt-4 text-sm font-semibold text-slate-800">{title}</p>
+      <p className="mt-4 text-sm font-semibold text-slate-800 dark:text-slate-200">{title}</p>
       {description && (
-        <p className="mt-1 text-xs text-slate-500 max-w-sm">{description}</p>
+        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 max-w-sm">{description}</p>
       )}
 
       {steps && steps.length > 0 && (
@@ -67,10 +67,10 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
               <span
                 className={
                   step.state === 'done'
-                    ? 'text-slate-600'
+                    ? 'text-slate-600 dark:text-slate-300'
                     : step.state === 'active'
-                    ? 'font-semibold text-slate-800'
-                    : 'text-slate-400'
+                    ? 'font-semibold text-slate-800 dark:text-slate-100'
+                    : 'text-slate-400 dark:text-slate-500'
                 }
               >
                 {step.label}

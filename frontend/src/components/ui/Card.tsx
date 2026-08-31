@@ -14,7 +14,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={cn(
-        'bg-white rounded-xl border border-slate-200 shadow-card',
+        'bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-card',
         padded && 'p-5 sm:p-6',
         className
       )}

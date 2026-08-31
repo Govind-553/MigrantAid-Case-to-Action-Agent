@@ -19,25 +19,25 @@ const PRIORITY_META: Record<
     label: 'Immediate',
     tone: 'danger',
     icon: <AlertCircle className="h-3.5 w-3.5" />,
-    ring: 'border-danger.border',
+    ring: 'border-danger.border dark:border-red-800',
   },
   high: {
     label: 'High priority',
     tone: 'warning',
     icon: <Clock className="h-3.5 w-3.5" />,
-    ring: 'border-warning.border',
+    ring: 'border-warning.border dark:border-amber-800',
   },
   medium: {
     label: 'Medium priority',
     tone: 'info',
     icon: <Info className="h-3.5 w-3.5" />,
-    ring: 'border-blue-200',
+    ring: 'border-blue-200 dark:border-blue-800',
   },
   low: {
     label: 'Low priority',
     tone: 'neutral',
     icon: <Zap className="h-3.5 w-3.5" />,
-    ring: 'border-slate-200',
+    ring: 'border-slate-200 dark:border-slate-700',
   },
 };
 
@@ -71,13 +71,13 @@ export const NeedsView: React.FC<NeedsViewProps> = ({ assessment }) => {
               <div
                 key={idx}
                 className={cn(
-                  'p-4 rounded-xl border bg-white transition-colors',
+                  'p-4 rounded-xl border bg-white dark:bg-slate-900 transition-colors',
                   meta.ring
                 )}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-sm font-bold text-slate-900 capitalize">
+                    <span className="text-sm font-bold text-slate-900 dark:text-white capitalize">
                       {need.category.replace(/_/g, ' ')}
                     </span>
                   </div>
@@ -86,17 +86,17 @@ export const NeedsView: React.FC<NeedsViewProps> = ({ assessment }) => {
                   </StatusBadge>
                 </div>
 
-                <p className="text-xs text-slate-700 leading-relaxed mt-2">
+                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed mt-2">
                   {need.reason}
                 </p>
 
                 {need.evidence_references && need.evidence_references.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-1.5 mt-3 text-[11px] text-slate-500">
-                    <span className="font-semibold text-slate-600">Grounded in:</span>
+                  <div className="flex flex-wrap items-center gap-1.5 mt-3 text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="font-semibold text-slate-600 dark:text-slate-300">Grounded in:</span>
                     {need.evidence_references.map((ref, i) => (
                       <span
                         key={i}
-                        className="bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200 text-slate-700"
+                        className="bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                       >
                         {ref.replace(/_/g, ' ')}
                       </span>

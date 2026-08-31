@@ -27,7 +27,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
         <AlertTriangle className="h-5 w-5 text-danger shrink-0 mt-0.5" aria-hidden="true" />
         <div className="min-w-0">
           <p className="text-sm font-semibold text-danger.text">{message}</p>
-          <p className="text-xs text-slate-600 mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
             Please try again. Your previous work has not been lost.
           </p>
 
@@ -42,7 +42,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowDetails((v) => !v)}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-slate-700"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                   aria-expanded={showDetails}
                 >
                   Technical details
@@ -57,7 +57,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
           )}
 
           {showDetails && details && (
-            <pre className="mt-3 p-3 bg-white border border-slate-200 rounded-lg text-[11px] text-slate-600 overflow-auto max-h-40">
+            <pre className="mt-3 p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-[11px] text-slate-600 dark:text-slate-300 overflow-auto max-h-40">
               {details}
             </pre>
           )}

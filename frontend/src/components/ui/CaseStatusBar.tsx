@@ -74,11 +74,11 @@ export const CaseStatusBar: React.FC<CaseStatusBarProps> = ({ caseState }) => {
     <Card padded={false} className="p-4 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
-          <Tag className="h-4 w-4 text-slate-400 shrink-0" aria-hidden="true" />
-          <span className="font-mono text-xs font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">
+          <Tag className="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0" aria-hidden="true" />
+          <span className="font-mono text-xs font-bold text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md">
             {caseState.case_id}
           </span>
-          <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
             Workflow status
           </span>
           <Badge tone={statusTone}>
@@ -91,9 +91,9 @@ export const CaseStatusBar: React.FC<CaseStatusBarProps> = ({ caseState }) => {
             const Icon = s.icon;
             return (
               <div key={s.label} className="flex items-center gap-2">
-                <Icon className="h-3.5 w-3.5 text-slate-400" aria-hidden="true" />
-                <span className="text-xs text-slate-600">{s.label}:</span>
-                <span className="text-xs font-bold text-slate-900 tabular-nums">
+                <Icon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" aria-hidden="true" />
+                <span className="text-xs text-slate-600 dark:text-slate-400">{s.label}:</span>
+                <span className="text-xs font-bold text-slate-900 dark:text-slate-100 tabular-nums">
                   {s.value}
                 </span>
               </div>
