@@ -9,7 +9,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from contextlib import asynccontextmanager
 
 from app.api.routes import router as api_router
-from app.config import logger
+from app.config import logger, settings
 from app.db.connection import check_db_connection, close_db_pool, init_db_pool
 
 
@@ -27,10 +27,11 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Enable CORS for frontend integration
+# Enable CORS for frontend integration.
+# Origins are explicit (never wildcard with credentials) and configurable via FRONTEND_URL.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
