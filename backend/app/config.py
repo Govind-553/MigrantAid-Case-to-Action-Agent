@@ -25,17 +25,16 @@ class Settings(BaseModel):
 
     @property
     def allowed_origins(self) -> list[str]:
-        """Explicit allowed origins for CORS.
+        """Explicit allowed origins for CORS (never wildcard while credentials are enabled).
 
-        - If FRONTEND_URL is set, use its comma-separated values (production).
-        - Otherwise default to the local dev frontend origins.
-        A wildcard is never used while credentials are enabled.
+        Always preserves local development origins, and additionally allows any
+        comma-separated origins provided via FRONTEND_URL (e.g. the deployed
+        Vercel frontend: https://migrantaid-zeta.vercel.app).
         """
-        if self.FRONTEND_URL:
-            origins = [o.strip() for o in self.FRONTEND_URL.split(",") if o.strip()]
-            if origins:
-                return origins
-        return ["http://localhost:3000", "http://127.0.0.1:3000"]
+        dev_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+        configured = [o.strip() for o in self.FRONTEND_URL.split(",") if o.strip()]
+        # Deduplicate while keeping order: configured production + local dev origins.
+        return list(dict.fromkeys(configured + dev_origins))
 
 settings = Settings()
 

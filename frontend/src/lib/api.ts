@@ -1,15 +1,5 @@
 import { CaseFact, CaseState, ComparisonReport, HumanReview } from '../types';
 
-/**
- * API base used by the browser.
- *
- * Default is the same-origin relative path `/api`, which is proxied to the
- * backend by the Next.js rewrite in next.config.js (server-side). This keeps
- * the backend URL off the browser and avoids exposing any secrets.
- *
- * NEXT_PUBLIC_API_URL is an optional override for setups that call a backend
- * directly from the browser (in which case backend CORS must allow it).
- */
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 export async function createCase(narrative: string, caseId?: string): Promise<CaseState> {
