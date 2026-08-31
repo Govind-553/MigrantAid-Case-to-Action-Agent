@@ -28,6 +28,11 @@ from app.schemas.domain import (
 
 logger = logging.getLogger("migrantaid")
 
+WORD_TO_NUM = {
+    "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10
+}
+
 INTAKE_PROMPT_TEMPLATE = """You are a frontline caseworker intake assistant.
 Analyze the following migrant worker case narrative and extract structured facts.
 
@@ -37,7 +42,7 @@ Case Narrative:
 Extract:
 1. "facts": list of objects, each having:
    - "field": string semantic field name (e.g. "location", "employment_status", "dependents", "other_household_income", "identity_document", "bank_account", "housing_need", "food_need", "documentation_need", "current_address_proof", "children", "wage_dispute")
-   - "value": extracted value (string, integer, float, or boolean)
+   - "value": extracted value (string, integer, float, or boolean). For numeric count fields such as "children" and "dependents", convert number words (e.g. "two") into an exact integer (e.g. 2).
    - "status": "explicit" if directly stated, "inferred" if deduced from context
    - "notes": optional context
 2. "missing_information": list of field names that are important but missing from the narrative
@@ -133,9 +138,13 @@ class IntakeAgent:
             missing.append("prior_registration_status")
 
         # 3. Dependents & Children
-        dep_match = re.search(r"(\d+)\s+(?:children|kids|dependents|family members|school-age children)", lower)
+        dep_match = re.search(
+            r"\b(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(?:children|kids|dependents|family members|school-age children|child)\b",
+            lower,
+        )
         if dep_match:
-            count = int(dep_match.group(1))
+            raw_cnt = dep_match.group(1)
+            count = int(raw_cnt) if raw_cnt.isdigit() else WORD_TO_NUM.get(raw_cnt, 1)
             facts.append({"field": "dependents", "value": count, "status": "explicit"})
             facts.append({"field": "children", "value": count, "status": "explicit"})
         elif re.search(r"\b(family|children|kids|spouse|couple)\b", lower):
@@ -224,13 +233,18 @@ class IntakeAgent:
         data = None
         if self._has_llm and not force_heuristic:
             try:
-                import google.generativeai as genai
-                genai.configure(api_key=self.api_key)
-                model = genai.GenerativeModel(self.model_name)
+                from google import genai
+                from google.genai import types
+
+                client = genai.Client(api_key=self.api_key)
                 prompt = INTAKE_PROMPT_TEMPLATE.format(narrative=narrative)
-                resp = model.generate_content(
-                    prompt,
-                    generation_config={"temperature": 0.0, "response_mime_type": "application/json"}
+                resp = client.models.generate_content(
+                    model=self.model_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=0.0,
+                        response_mime_type="application/json",
+                    ),
                 )
                 data = json.loads(resp.text)
             except Exception as e:

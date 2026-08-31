@@ -64,6 +64,19 @@ class TestIntakeAgent:
         assert profile.get_fact("location").value == "Pune"
         assert profile.get_fact("employment_status").value == "unemployed"
         assert profile.get_fact("other_household_income").value is False
+        assert profile.get_fact("children").value == 2
+
+    def test_children_count_word_extraction(self):
+        agent = IntakeAgent()
+        narrative_two = "A migrant worker has two children."
+        profile_two = agent.process("CASE-CHILD-2", narrative_two, force_heuristic=True)
+        assert profile_two.get_fact("children").value == 2
+        assert profile_two.get_fact("children").status == FactStatus.explicit
+
+        narrative_three = "The beneficiary has 3 kids."
+        profile_three = agent.process("CASE-CHILD-3", narrative_three, force_heuristic=True)
+        assert profile_three.get_fact("children").value == 3
+        assert profile_three.get_fact("children").status == FactStatus.explicit
 
     def test_detect_contradiction(self):
         agent = IntakeAgent()

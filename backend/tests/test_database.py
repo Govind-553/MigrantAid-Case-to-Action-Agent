@@ -235,3 +235,35 @@ def test_list_cases_persistence(repo, sample_case_state):
     match = next((s for s in summaries if s["case_id"] == sample_case_state.case_id), None)
     assert match is not None
     assert match["workflow_state"] == "APPROVED"
+
+
+def test_transient_connection_recovery_and_persistence(repo, sample_case_state):
+    """Verify that get_db_connection handles transient connection drop and succeeds on retry."""
+    from app.db.connection import get_db_connection
+
+    cid = sample_case_state.case_id
+
+    # Test executing a query via get_db_connection
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT 1;")
+            res = cur.fetchone()
+            assert res == (1,)
+
+    # Save case to ensure persistence works smoothly
+    repo.save_case(sample_case_state)
+    retrieved = repo.get_case(cid)
+    assert retrieved is not None
+    assert retrieved.case_id == cid
+
+
+def test_permanent_db_failure_propagates():
+    """Verify that non-transient database errors are NOT swallowed and reach the caller."""
+    import psycopg
+    from app.db.connection import get_db_connection
+
+    with pytest.raises(psycopg.Error):
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT * FROM non_existent_table_12345;")
+

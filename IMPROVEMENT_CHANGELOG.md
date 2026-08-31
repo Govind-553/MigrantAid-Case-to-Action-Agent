@@ -337,12 +337,64 @@ Frontend-only changes (no backend, API, agent, verification, or evaluation logic
 - Full-stack smoke test via `next dev` + FastAPI confirmed the complete journey (create case → facts → needs → recommendations → verification → action plan → human review decision → trajectory, and the benchmark dashboard) works against the real backend.
 - VARR/benchmark values shown are read live from the evaluation endpoint (not hard-coded).
 
+---
+
+## Iteration 4 — Final Runtime Bug Fix + Regression Audit (2026-08-31)
+
+**Date:** 2026-08-31  
+**Version:** v1.4 (runtime bug fix & regression audit)  
+**Scope:** Gemini SDK migration, PostgreSQL connection pool resilience, children count fact extraction. No architectural changes. No new agents.
+
+### Change 1 — Gemini SDK Migration to `google.genai`
+
+**Previous behavior:**  
+Backend relied on deprecated `google.generativeai` SDK. Calling `gemini-2.5-flash` resulted in `404 NOT_FOUND` from Google's API (`This model models/gemini-2.5-flash is no longer available to new users...`), causing silent fallback to the deterministic heuristic.
+
+**Root cause:**  
+Package deprecation by Google and model deprecation on v1beta API endpoint for new users.
+
+**Change:**  
+- Replaced `google-generativeai` with `google-genai` in `backend/requirements.txt` and installed `google-genai` in virtual environment.
+- Updated `intake_agent.py` and `baseline.py` to instantiate `google.genai.Client` and use `client.models.generate_content(...)`.
+- Updated `.env` and `config.py` default to `LLM_MODEL=gemini-3.6-flash`.
+- Preserved deterministic fallback for genuine API outages without hiding API errors.
+
+### Change 2 — PostgreSQL Connection Pool Stale Connection Handling
+
+**Previous behavior:**  
+First persistence attempt to database occasionally failed with `"psycopg.pool: discarding closed connection"` followed by `"server closed the connection unexpectedly"`.
+
+**Root cause:**  
+`ConnectionPool` in `backend/app/db/connection.py` was instantiated without connection health checks. When idle TCP connections were closed by Prisma Pooled Proxy, stale connections were borrowed from the pool.
+
+**Change:**  
+- Configured `ConnectionPool` with `check=ConnectionPool.check_connection`, `max_idle=300.0`, and `max_lifetime=1800.0` in `backend/app/db/connection.py`.
+- Wrapped `get_db_connection()` in a bounded transient retry loop catching `(psycopg.OperationalError, psycopg.errors.ConnectionException)` to discard closed connections and retry once.
+- Non-transient errors (syntax, schema, integrity) continue to propagate unhindered.
+
+### Change 3 — Children Count Fact Extraction Fix
+
+**Previous behavior:**  
+Case narrative `"A migrant worker in Pune recently lost his job. He has two children..."` produced `children = 1` in Facts UI.
+
+**Root cause:**  
+`_extract_heuristic` in `intake_agent.py` used `(\d+)` regex (digits only). `"two children"` failed digit matching and fell into the generic `elif` block which defaulted `children` to `1`.
+
+**Change:**  
+- Updated `_extract_heuristic` regex and added `WORD_TO_NUM` dictionary mapping word numbers (`"one"`, `"two"`, `"three"`, `"four"`, `"five"`, etc.) to integer values (`"two children"` → `2`).
+- Updated intake prompt template to instruct Gemini to extract exact integer counts for `children` and `dependents`.
+
+### End-to-End Regression Audit
+
+- **Live Case Tested:** `"A migrant worker in Pune recently lost his job. He has two children and says the household currently has no other income. He has an identity document and a bank account."`
+- **Extracted Facts Verified:** Location=Pune, employment_status=unemployed, children=2, dependents=2, other_household_income=False, identity_document=True, bank_account=True.
+- **Gemini Status:** Live call executed natively via `google.genai` (`gemini-3.6-flash`), no fallback used, no 404, no deprecation warning.
+- **Database Status:** Persisted to PostgreSQL on first attempt without stale connection errors. Simulated service restart verified full state retrieval.
+- **Test Suite Result:** 159/159 backend tests pass (100%).
+
 ### Decision
 
-KEEP — Polished, responsive, accessible UI that preserves all existing product semantics and evaluation results.
+KEEP — Complete resolution of all three runtime issues with verified end-to-end regression compliance.
 
-### Lesson
-
-A small, consistent design-token + shared-component system and progressive-disclosure workflow navigation deliver the "polished AI platform" impression the hackathon aims for, and can be overlaid on an existing single-page stack purely in the frontend layer without touching backend logic.
 
 

@@ -95,12 +95,17 @@ class BaselineService:
     def _call_live_llm(self, prompt: str) -> str:
         """Invoke Gemini API."""
         try:
-            import google.generativeai as genai
-            genai.configure(api_key=self.api_key)
-            model = genai.GenerativeModel(self.model_name)
-            response = model.generate_content(
-                prompt,
-                generation_config={"temperature": 0.0, "response_mime_type": "application/json"}
+            from google import genai
+            from google.genai import types
+
+            client = genai.Client(api_key=self.api_key)
+            response = client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    temperature=0.0,
+                    response_mime_type="application/json",
+                ),
             )
             return response.text
         except Exception as e:

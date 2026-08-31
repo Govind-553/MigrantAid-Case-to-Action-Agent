@@ -20,6 +20,12 @@ logger = logging.getLogger("migrantaid")
 _pool: ConnectionPool | None = None
 
 
+TRANSIENT_DB_ERRORS = (
+    psycopg.OperationalError,
+    psycopg.errors.ConnectionException,
+)
+
+
 def init_db_pool() -> ConnectionPool | None:
     """Initialize the database connection pool if DATABASE_URL is configured."""
     global _pool  # noqa: PLW0603
@@ -30,11 +36,14 @@ def init_db_pool() -> ConnectionPool | None:
 
     try:
         if _pool is None:
-            logger.info("Initializing database connection pool...")
+            logger.info("Initializing database connection pool with health checks...")
             _pool = ConnectionPool(
                 conninfo=db_url,
                 min_size=1,
                 max_size=10,
+                max_idle=300.0,
+                max_lifetime=1800.0,
+                check=ConnectionPool.check_connection,
                 kwargs={"autocommit": True},
                 open=True,
             )
@@ -65,17 +74,30 @@ def get_db_connection() -> Generator[psycopg.Connection, None, None]:
     """
     Context manager for obtaining a database connection.
     Uses pool if available, otherwise opens a direct connection.
+    Includes bounded retry for transient connection/stale pool failures.
     """
     db_url = settings.DATABASE_URL
     if not db_url:
         raise RuntimeError("DATABASE_URL is not configured.")
 
-    if _pool is not None:
-        with _pool.connection() as conn:
-            yield conn
-    else:
-        with psycopg.connect(db_url, autocommit=True) as conn:
-            yield conn
+    max_attempts = 2
+    for attempt in range(1, max_attempts + 1):
+        try:
+            if _pool is not None:
+                with _pool.connection() as conn:
+                    yield conn
+            else:
+                with psycopg.connect(db_url, autocommit=True) as conn:
+                    yield conn
+            return
+        except TRANSIENT_DB_ERRORS as e:
+            if attempt < max_attempts:
+                logger.warning(
+                    f"Transient database connection failure (attempt {attempt}/{max_attempts}): {e!s}. Retrying..."
+                )
+                continue
+            logger.error(f"Database connection failed after {max_attempts} attempts: {e!s}")
+            raise
 
 
 def check_db_connection() -> bool:

@@ -9,7 +9,7 @@ load_dotenv()
 
 class Settings(BaseModel):
     LLM_API_KEY: str = Field(default_factory=lambda: os.getenv("LLM_API_KEY", ""))
-    LLM_MODEL: str = Field(default_factory=lambda: os.getenv("LLM_MODEL", "gemini-1.5-flash"))
+    LLM_MODEL: str = Field(default_factory=lambda: os.getenv("LLM_MODEL", "gemini-3.6-flash"))
     DATABASE_URL: str = Field(default_factory=lambda: os.getenv("DATABASE_URL", ""))
     DIRECT_URL: str = Field(default_factory=lambda: os.getenv("DIRECT_URL", ""))
     APP_ENV: str = Field(default_factory=lambda: os.getenv("APP_ENV", "development"))
